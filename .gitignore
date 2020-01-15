@@ -1,0 +1,76 @@
+syntax: glob
+build/
+dist/
+media/*
+
+# Eclipse
+####################
+.settings/
+.project
+.pydevproject
+
+# Compiled python
+###################
+*.pyc
+*.pyo
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Temporary files #
+###################
+*.swp
+*.swo
+*.bak
+*~
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.idea
+*.css
+*.map
+*.scss
+*.js
+*.png
+*.svg
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+.idea/*
+.vscode/*
+conf/config.ini
+logs/*.log
+public/*
+output/*.txt
+.environment
+.project
+.pydevproject
+.settings
+db.sqlite3
+env
