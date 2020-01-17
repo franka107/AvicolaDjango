@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'farms.apps.FarmsConfig',
+    'sheds.apps.ShedsConfig',
 ]
 
 MIDDLEWARE = [
