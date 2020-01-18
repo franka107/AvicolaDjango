@@ -25,7 +25,7 @@ SECRET_KEY = '222#rauw51i4_8ckqvn)yfm59q!zmz92lg8-gd4r^*t6ie&&ky'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.149.128']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'farms.apps.FarmsConfig',
     'sheds.apps.ShedsConfig',
+    'chickens.apps.ChickensConfig',
     'rest_framework',
     'corsheaders',
 ]
