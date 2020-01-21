@@ -55,19 +55,15 @@ class ShedRegister(models.Model):
     #Ingreso de comida
     food_income = models.IntegerField(default=0)
     #Saldo de comida
-    food_deposit = models.IntegerField()
+    food_deposit = models.IntegerField(default=0)
     #Consumo de comida
-    food_consumption = models.IntegerField()
+    food_consumption = models.IntegerField(default=0)
     #Saldo final
-    final_deposit = models.IntegerField()
+    final_deposit = models.IntegerField(default=0)
     #ingreso de pollos
     #chicken_income = models.IntegerField(default=0)
-    #cantidad de pollo
-    chicken_quantity = models.IntegerField()
     #muerte de pollos
     chicken_death = models.IntegerField(default=0)
-    #total de pollos
-    chicken_total = models.IntegerField()
     #Observacion(opcional)
     observation =  models.TextField(blank=True)
 
