@@ -1,8 +1,11 @@
+from django.http import HttpResponse
 from rest_framework import viewsets
-
 from .serializers import ShedSerializer, ShedProductionUpSerializer, ShedProductionDownSerializer, ShedRaisedUpSerializer, ShedRaisedDownSerializer
 from .models import Shed, ShedRegister
 from django.utils import timezone
+
+from django.urls import reverse
+from django.views import generic
 
 class ShedViewSet(viewsets.ModelViewSet):
     queryset = Shed.objects.all().order_by('name')
@@ -22,6 +25,11 @@ class ShedRaisedUpViewSet(viewsets.ModelViewSet):
 
 class ShedRaisedDownViewSet(viewsets.ModelViewSet):
     queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Abajo")
-    serializer_class = ShedRaisedDownSerializer   
+    serializer_class = ShedRaisedDownSerializer
 
+class ShedView(generic.ListView):
+    template_name = 'shed/shed.html'
+    context_object_name = 'list_shed'
 
+    def get_queryset(self):
+        return  Shed.objects.order_by('id')[:5]       

@@ -22,7 +22,6 @@ class ShedRaisedUpSerializer(serializers.HyperlinkedModelSerializer):
         model = ShedRegister
         fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
 
-
 class ShedRaisedDownSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ShedRegister
