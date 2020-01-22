@@ -8,7 +8,8 @@ router.register(r'productionup', views.ShedProductionUpViewSet)
 router.register(r'productiondown', views.ShedProductionDownViewSet)
 router.register(r'raisedup', views.ShedRaisedUpViewSet)
 router.register(r'raiseddown', views.ShedRaisedDownViewSet)
-app_name = 'shed'
+
+
 
 urlpatterns = [
     path('api/', include(router.urls)),

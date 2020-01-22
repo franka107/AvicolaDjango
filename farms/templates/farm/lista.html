@@ -1,0 +1,51 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% load static %}  
+{% load widget_tweaks %}
+<div align="left" class="btn_crear mb-3">
+  <a href="crear"  class="btn btn-primary">Crear</a>
+</div>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th width="35%">Nombre</th>
+      <th>Frecha de Creacion</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'postres' y los listamos -->
+  {% for farm in object_list %}
+    <tr>
+      <td>{{ farm.name }}</td>
+      <td>{{ farm.created }}</td>
+      <td>{{ farm.is_active }}</td>
+      <td>        
+        <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o postre desde la misma tabla HTML -->                        
+        <form method="POST" action="eliminar/{{farm.id}}">
+          {% csrf_token %}
+          <div class="btn-group">
+ 
+            <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
+            <a href="detalle/{{farm.id}}" title="Ver"  class="btn btn-success">Ver </a>
+            <a href="editar/{{farm.id}}" title="Editar"  class="btn btn-primary">Editar </a>
+            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+              Eliminar
+            </button>
+          </div>
+        </form>
+ 
+      </td>
+    </tr>
+  {% endfor %}
+ 
+  </tbody>
+</table>
+
+{% bootstrap_javascript jquery='full' %} 
+{% endblock %} 
+ 

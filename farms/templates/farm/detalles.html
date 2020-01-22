@@ -1,0 +1,19 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% load static %}  
+{% load widget_tweaks %}
+
+<h4>Detalles</h4>
+ 
+<p><span class="txt_negrita">Nombre:</span> <br> {{object.name}}</p>
+<p><span class="txt_negrita">Precio:</span> <br> {{object.is_active}}</p>
+<p><span class="txt_negrita">Creado:</span> <br> {{object.created}}</p>
+<p><span class="txt_negrita">Actualizado:</span> <br> {{object.updated}}</p>
+ 
+<!-- Botón para volver a la vista principal (Home) -->
+<a href="../"  class="btn btn-primary">Volver</a>
+
+{% bootstrap_javascript jquery='full' %} 
+{% endblock %}
