@@ -37,29 +37,29 @@ urlpatterns = [
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
 
 
-    path('productionup/', ShedProductionUpListado.as_view(template_name = "shed/productionup/lista.html"), name='leer_shedprodcutionup'),
+    path('productionup/', ShedProductionUpListado.as_view(template_name = "shed/productionup/lista.html"), name='leer_shedproductionup'),
  
-    path('productionup/detalle/<int:pk>', ShedProductionUpDetalle.as_view(template_name = "shed/productionup/detalles.html"), name='detalles_shedprodcutionup'),
+    path('productionup/detalle/<int:pk>', ShedProductionUpDetalle.as_view(template_name = "shed/productionup/detalles.html"), name='detalles_shedproductionup'),
  
-    path('productionup/crear', ShedProductionUpCrear.as_view(template_name = "shed/productionup/crear.html"), name='crear_shedprodcutionup'),
+    path('productionup/crear', ShedProductionUpCrear.as_view(template_name = "shed/productionup/crear.html"), name='crear_shedproductionup'),
  
-    path('productionup/editar/<int:pk>', ShedProductionUpActualizar.as_view(template_name = "shed/productionup/actualizar.html"), name='actualizar_shedprodcutionup'), 
+    path('productionup/editar/<int:pk>', ShedProductionUpActualizar.as_view(template_name = "shed/productionup/actualizar.html"), name='actualizar_shedproductionup'), 
  
-    path('productionup/eliminar/<int:pk>', ShedProductionUpEliminar.as_view(), name='eliminar_shedprodcutionup'), 
+    path('productionup/eliminar/<int:pk>', ShedProductionUpEliminar.as_view(), name='eliminar_shedproductionup'), 
 
 
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
 
 
-    path('productiondown/', ShedProductionDownListado.as_view(template_name = "shed/productiondown/lista.html"), name='leer_shedprodcutiondown'),
+    path('productiondown/', ShedProductionDownListado.as_view(template_name = "shed/productiondown/lista.html"), name='leer_shedproductiondown'),
  
-    path('productiondown/detalle/<int:pk>', ShedProductionDownDetalle.as_view(template_name = "shed/productiondown/detalles.html"), name='detalles_shedprodcutiondown'),
+    path('productiondown/detalle/<int:pk>', ShedProductionDownDetalle.as_view(template_name = "shed/productiondown/detalles.html"), name='detalles_shedproductiondown'),
  
-    path('productiondown/crear', ShedProductionDownCrear.as_view(template_name = "shed/productiondown/crear.html"), name='crear_shedprodcutiondown'),
+    path('productiondown/crear', ShedProductionDownCrear.as_view(template_name = "shed/productiondown/crear.html"), name='crear_shedproductiondown'),
  
-    path('productiondown/editar/<int:pk>', ShedProductionDownActualizar.as_view(template_name = "shed/productiondown/actualizar.html"), name='actualizar_shedprodcutiondown'), 
+    path('productiondown/editar/<int:pk>', ShedProductionDownActualizar.as_view(template_name = "shed/productiondown/actualizar.html"), name='actualizar_shedproductiondown'), 
  
-    path('productiondown/eliminar/<int:pk>', ShedProductionDownEliminar.as_view(), name='eliminar_shedprodcutiondown'), 
+    path('productiondown/eliminar/<int:pk>', ShedProductionDownEliminar.as_view(), name='eliminar_shedproductiondown'), 
 
 
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
