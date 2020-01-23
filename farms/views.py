@@ -30,7 +30,7 @@ class FarmCrear(SuccessMessageMixin, CreateView):
  
     # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_farm') # Redireccionamos a la vista principal 'leer' 
  
 class FarmActualizar(SuccessMessageMixin, UpdateView): 
     model = Farm
@@ -40,7 +40,7 @@ class FarmActualizar(SuccessMessageMixin, UpdateView):
  
     # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_farm') # Redireccionamos a la vista principal 'leer' 
  
 class FarmEliminar(SuccessMessageMixin, DeleteView): 
     model = Farm 
@@ -51,4 +51,4 @@ class FarmEliminar(SuccessMessageMixin, DeleteView):
     def get_success_url(self): 
         success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
-        return reverse('leer') # Redireccionamos a la vista principal 'leer'
+        return reverse('leer_farm') # Redireccionamos a la vista principal 'leer'

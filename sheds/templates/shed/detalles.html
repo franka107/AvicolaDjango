@@ -1,0 +1,15 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load static %}  
+
+<h4>Detalles</h4>
+ 
+<p><span class="txt_negrita">Granja:</span> <br> {{object.farm}}</p>
+<p><span class="txt_negrita">Tipo:</span> <br> {{object.type}}</p>
+<p><span class="txt_negrita">Nombre:</span> <br> {{object.name}}</p>
+<p><span class="txt_negrita">Estado:</span> <br> {{object.is_active}}</p>
+
+<!-- Botón para volver a la vista principal (Home) -->
+<a href="../"  class="btn btn-primary">Volver</a>
+
+{% endblock %}

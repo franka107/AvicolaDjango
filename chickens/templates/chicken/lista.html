@@ -1,13 +1,13 @@
 {% extends 'farm/base.html' %}
 {% block content %}
-{% load static %}  
+{% load static %}
 {% if messages %}
   <ul class="messages list-group mb-3">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
     {% endfor %}
   </ul>
-{% endif %}
+{% endif %}  
 <div align="left" class="btn_crear mb-3">
   <a href="crear"  class="btn btn-primary">Crear</a>
 </div>
@@ -15,7 +15,11 @@
   <thead>
     <tr>
       <th width="35%">Nombre</th>
-      <th>Frecha de Creacion</th>
+      <th>Galpon</th>
+      <th>Cantidad</th>
+      <th>Edad en Semana</th>
+      <th>Fecha de entrada</th>
+      <th>Tipo de Gallina</th>
       <th>Estado</th>
       <th>Acciones</th>
     </tr>
@@ -23,20 +27,24 @@
   <tbody>
   
   <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'postres' y los listamos -->
-  {% for farm in object_list %}
+  {% for promotion in object_list %}
     <tr>
-      <td>{{ farm.name }}</td>
-      <td>{{ farm.created }}</td>
-      <td>{{ farm.is_active }}</td>
+      <td>{{ promotion.name }}</td>
+      <td>{{ promotion.shed }}</td>
+      <td>{{ promotion.quantity }}</td>
+      <td>{{ promotion.week_age }}</td>
+      <td>{{ promotion.entry_date }}</td>
+      <td>{{ promotion.chicken_type }}</td>
+      <td>{{ promotion.is_active }}</td>
       <td>        
         <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o postre desde la misma tabla HTML -->                        
-        <form method="POST" action="eliminar/{{farm.id}}">
+        <form method="POST" action="eliminar/{{promotion.id}}">
           {% csrf_token %}
           <div class="btn-group">
  
             <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-            <a href="detalle/{{farm.id}}" title="Ver"  class="btn btn-success">Ver </a>
-            <a href="editar/{{farm.id}}" title="Editar"  class="btn btn-primary">Editar </a>
+            <a href="detalle/{{promotion.id}}" title="Ver"  class="btn btn-success">Ver </a>
+            <a href="editar/{{promotion.id}}" title="Editar"  class="btn btn-primary">Editar </a>
             <button class="btn btn-danger" onclick="return eliminar();" type="submit">
               Eliminar
             </button>
@@ -58,6 +66,5 @@
       return false;
   }
 </script>
-
 {% endblock %} 
  

@@ -1,0 +1,18 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load static %}  
+
+<h4>Detalles</h4>
+ 
+<p><span class="txt_negrita">Nombre:</span> <br> {{object.name}}</p>
+<p><span class="txt_negrita">Galpon:</span> <br> {{object.shed}}</p>
+<p><span class="txt_negrita">Cantidad:</span> <br> {{object.quantity}}</p>
+<p><span class="txt_negrita">Edad en Semana:</span> <br> {{object.week_age}}</p>
+<p><span class="txt_negrita">Fecha de Entrada:</span> <br> {{object.entry_date}}</p>
+<p><span class="txt_negrita">Tipo de Gallina:</span> <br> {{object.chicken_type}}</p>
+<p><span class="txt_negrita">Edad en Estado:</span> <br> {{object.is_active}}</p>
+
+<!-- Botón para volver a la vista principal (Home) -->
+<a href="../"  class="btn btn-primary">Volver</a>
+
+{% endblock %}
