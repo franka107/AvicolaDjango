@@ -69,19 +69,21 @@ class ShedRegister(models.Model):
 
 
     #total de paquetes ( solo en produccion )
-    package_total = models.IntegerField(blank= True)
+    package_total = models.IntegerField(default=0)
     #huevos sobrantes (solo produccion)
-    leftover_eggs = models.IntegerField(blank= True)
+    leftover_eggs = models.IntegerField(default=0)
     #tipo de comida
-    food_type = models.CharField(max_length=1, choices=FOOD_CHOICES)
+    food_type = models.CharField(max_length=1, choices=FOOD_CHOICES, blank=True)
     #precio del alimento
-    food_price = models.DecimalField(max_digits=10, decimal_places=2)
+    food_price = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     #porcentaje de postura
-    posture_percentaje =  models.DecimalField(max_digits=5, decimal_places=2)
+    posture_percentaje =  models.DecimalField(max_digits=5, decimal_places=2,default=0)
     #conversion
-    convertion = models.DecimalField(max_digits=5, decimal_places=2)
+    convertion = models.DecimalField(max_digits=5, decimal_places=2,default=0)
     #peso de gallina
-    chicken_weight = models.DecimalField(max_digits=5, decimal_places=2)
+    chicken_weight = models.DecimalField(max_digits=5, decimal_places=2,default=0)
+    #peso huevos
+    egg_weight = models.DecimalField(max_digits=5, decimal_places=2,default=0)
 
 
     

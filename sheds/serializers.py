@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Shed 
 from .models import ShedRegister 
+from farms.models import Farm
 
 class ShedSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

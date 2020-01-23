@@ -1,0 +1,21 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load static %}  
+
+<h4>Detalles</h4>
+ 
+<p><span class="txt_negrita">Galpon:</span> <br> {{object.shed}}</p>
+<p><span class="txt_negrita">Fecha:</span> <br> {{object.date}}</p>
+<p><span class="txt_negrita">Ingreso:</span> <br> {{object.food_income}}</p>
+<p><span class="txt_negrita">Saldo:</span> <br> {{object.food_deposit}}</p>
+<p><span class="txt_negrita">Consumo:</span> <br> {{object.food_consumption}}</p>
+<p><span class="txt_negrita">Saldo Final:</span> <br> {{object.final_deposit}}</p>
+<p><span class="txt_negrita">Muertes:</span> <br> {{object.chicken_death}}</p>
+<p><span class="txt_negrita">Tipo de Comida:</span> <br> {{object.food_type}}</p>
+<p><span class="txt_negrita">Precio de Alimento:</span> <br> {{object.food_price}}</p>
+<p><span class="txt_negrita">Peso de Gallina:</span> <br> {{object.chicken_weight}}</p>
+
+<!-- Botón para volver a la vista principal (Home) -->
+<a href="../"  class="btn btn-primary">Volver</a>
+
+{% endblock %}

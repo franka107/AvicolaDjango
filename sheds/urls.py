@@ -3,8 +3,9 @@ from rest_framework import routers
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static 
-from sheds.views import ShedListado, ShedDetalle, ShedCrear, ShedActualizar, ShedEliminar
-
+from sheds.views import ShedListado, ShedDetalle, ShedCrear, ShedActualizar, ShedEliminar,ShedProductionUpListado, ShedProductionUpDetalle, ShedProductionUpCrear, ShedProductionUpActualizar, ShedProductionUpEliminar
+from sheds.views import ShedProductionDownListado,ShedProductionDownDetalle,ShedProductionDownCrear,ShedProductionDownActualizar,ShedProductionDownEliminar
+from sheds.views import ShedRaisedUpListado,ShedRaisedUpDetalle,ShedRaisedUpCrear,ShedRaisedUpActualizar,ShedRaisedUpEliminar
 router = routers.DefaultRouter()
 router.register(r'sheds', views.ShedViewSet)
 router.register(r'productionup', views.ShedProductionUpViewSet)
@@ -16,24 +17,62 @@ router.register(r'raiseddown', views.ShedRaisedDownViewSet)
 
 urlpatterns = [
 
-    #Esta seccion se pone las rutas de la API
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
     path('api/', include(router.urls)),
 
-    #Las rutas de la API
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    # La ruta 'leer' en donde listamos todos los registros o postres de la Base de Datos
     path('', ShedListado.as_view(template_name = "shed/lista.html"), name='leer_shed'),
  
-    # La ruta 'detalles' en donde mostraremos una página con los detalles de un postre o registro 
     path('detalle/<int:pk>', ShedDetalle.as_view(template_name = "shed/detalles.html"), name='detalles_shed'),
  
-    # La ruta 'crear' en donde mostraremos un formulario para crear un nuevo postre o registro  
     path('crear', ShedCrear.as_view(template_name = "shed/crear.html"), name='crear_shed'),
  
-    # La ruta 'actualizar' en donde mostraremos un formulario para actualizar un postre o registro de la Base de Datos 
     path('editar/<int:pk>', ShedActualizar.as_view(template_name = "shed/actualizar.html"), name='actualizar_shed'), 
  
-    # La ruta 'eliminar' que usaremos para eliminar un postre o registro de la Base de Datos 
-    path('eliminar/<int:pk>', ShedEliminar.as_view(), name='eliminar_shed'), 
+    path('eliminar/<int:pk>', ShedEliminar.as_view(), name='eliminar_shed'),
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
+
+    path('productionup/', ShedProductionUpListado.as_view(template_name = "shed/productionup/lista.html"), name='leer_shedprodcutionup'),
+ 
+    path('productionup/detalle/<int:pk>', ShedProductionUpDetalle.as_view(template_name = "shed/productionup/detalles.html"), name='detalles_shedprodcutionup'),
+ 
+    path('productionup/crear', ShedProductionUpCrear.as_view(template_name = "shed/productionup/crear.html"), name='crear_shedprodcutionup'),
+ 
+    path('productionup/editar/<int:pk>', ShedProductionUpActualizar.as_view(template_name = "shed/productionup/actualizar.html"), name='actualizar_shedprodcutionup'), 
+ 
+    path('productionup/eliminar/<int:pk>', ShedProductionUpEliminar.as_view(), name='eliminar_shedprodcutionup'), 
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
+
+    path('productiondown/', ShedProductionDownListado.as_view(template_name = "shed/productiondown/lista.html"), name='leer_shedprodcutiondown'),
+ 
+    path('productiondown/detalle/<int:pk>', ShedProductionDownDetalle.as_view(template_name = "shed/productiondown/detalles.html"), name='detalles_shedprodcutiondown'),
+ 
+    path('productiondown/crear', ShedProductionDownCrear.as_view(template_name = "shed/productiondown/crear.html"), name='crear_shedprodcutiondown'),
+ 
+    path('productiondown/editar/<int:pk>', ShedProductionDownActualizar.as_view(template_name = "shed/productiondown/actualizar.html"), name='actualizar_shedprodcutiondown'), 
+ 
+    path('productiondown/eliminar/<int:pk>', ShedProductionDownEliminar.as_view(), name='eliminar_shedprodcutiondown'), 
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
+
+    path('raisedup/', ShedRaisedUpListado.as_view(template_name = "shed/raisedup/lista.html"), name='leer_shedraisedup'),
+ 
+    path('raisedup/detalle/<int:pk>', ShedRaisedUpDetalle.as_view(template_name = "shed/raisedup/detalles.html"), name='detalles_shedraisedup'),
+ 
+    path('raisedup/crear', ShedRaisedUpCrear.as_view(template_name = "shed/raisedup/crear.html"), name='crear_shedraisedup'),
+ 
+    path('raisedup/editar/<int:pk>', ShedRaisedUpActualizar.as_view(template_name = "shed/raisedup/actualizar.html"), name='actualizar_shedraisedup'), 
+ 
+    path('raisedup/eliminar/<int:pk>', ShedRaisedUpEliminar.as_view(), name='eliminar_shedraisedup'), 
+
 ]

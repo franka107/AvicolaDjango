@@ -1,0 +1,71 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load static %}  
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <!-- {{ form.as_p }} -->
+  <div class="form-group">
+    <label for="farm" class="txt_negrita">Galpon</label>
+    {{ form.shed }} 
+  </div>
+  <div class="form-group">
+    <label for="type" class="txt_negrita">Fecha</label>
+    {{ form.date }} 
+  </div>
+  <div class="form-group">
+    <label for="name" class="txt_negrita">Ingreso</label>
+    {{ form.food_income }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Saldo</label>
+    {{ form.food_deposit }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Consumo</label>
+    {{ form.food_consumption }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Saldo Final</label>
+    {{ form.final_deposit }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Muertes</label>
+    {{ form.chicken_death }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Total Paquetes</label>
+    {{ form.package_total }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Total Unidades</label>
+    {{ form.leftover_eggs }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Tipo de Comida</label>
+    {{ form.food_type }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Precio de Alimento</label>
+    {{ form.food_price }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Porcentaje de Postura</label>
+    {{ form.posture_percentaje }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Conversion</label>
+    {{ form.convertion }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Peso de Gallina</label>
+    {{ form.chicken_weight }} 
+  </div>
+  <div class="form-group">
+    <label for="is_active" class="txt_negrita">Peso de huevo</label>
+    {{ form.egg_weight }} 
+  </div>
+  <button type="submit" class="btn btn-primary">Aceptar</button>
+  <a href="../" class="btn btn-danger">Volver</a>
+ 
+</form>
+{% endblock %}  
