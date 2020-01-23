@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'chickens.apps.ChickensConfig',
     'rest_framework',
     'corsheaders',
-    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

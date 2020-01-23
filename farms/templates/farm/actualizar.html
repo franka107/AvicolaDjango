@@ -1,24 +1,20 @@
 {% extends 'farm/base.html' %}
 {% block content %}
-{% load bootstrap4 %}
-{% bootstrap_css %}
 {% load static %}  
-{% load widget_tweaks %}
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   
   <!-- {{ form.as_p }} -->
   <div class="form-group">
     <label for="name" class="txt_negrita">Nombre</label>
-    {{ form.name|add_class:"form-control" }} <!-- Usamos la librería 'widget_tweaks' para crear esta caja de texto -->
+    {{ form.name }} <!-- Usamos la librería 'widget_tweaks' para crear esta caja de texto -->
   </div>
   <div class="form-group">
     <label for="is_active" class="txt_negrita">Estado</label>
-    {{ form.is_active|add_class:"form-control" }}
+    {{ form.is_active }}
   </div> 
   <button type="submit" class="btn btn-primary">Aceptar</button>
   <a href="../" type="submit" class="btn btn-primary">Volver</a>
  
 </form>
-{% bootstrap_javascript jquery='full' %} 
 {% endblock %}  
