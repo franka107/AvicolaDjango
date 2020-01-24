@@ -86,6 +86,7 @@ class ShedRegister(models.Model):
     egg_weight = models.DecimalField(max_digits=5, decimal_places=2,default=0)
 
 
+
     
 
     

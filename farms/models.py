@@ -16,8 +16,6 @@ class Farm(models.Model):
         auto_now=True,
     )
     
-
-
     class Meta:
         verbose_name = "Farm"
         verbose_name_plural = "Farms"

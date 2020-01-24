@@ -1,9 +1,10 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 <center>
-    <h1 class="display-4">
-        Bienvenido al sistema de adminstracion de Avimar/Avicola
+    <h1 class="">
+        Bienvenido <strong>{{ user.get_username }}  </strong> al sistema de adminstracion de Avimar/Avicola
     </h1>
+    {{ user.get_group_permissions }}
 </center>
 
 {% endblock %}

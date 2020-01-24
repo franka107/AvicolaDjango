@@ -1,21 +1,18 @@
 from django.shortcuts import render
-
 from django.http import HttpResponse
 from rest_framework import viewsets
 from .serializers import ShedSerializer, ShedProductionUpSerializer, ShedProductionDownSerializer, ShedRaisedUpSerializer, ShedRaisedDownSerializer
 from .models import Shed, ShedRegister
 from farms.models import Farm
 from django.utils import timezone
-
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
- 
 from django.urls import reverse
- 
 from django.contrib import messages 
 from django.contrib.messages.views import SuccessMessageMixin 
- 
 from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class ShedViewSet(viewsets.ModelViewSet):
     queryset = Shed.objects.all().order_by('name')
@@ -38,13 +35,13 @@ class ShedRaisedDownViewSet(viewsets.ModelViewSet):
     queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Abajo")
     serializer_class = ShedRaisedDownSerializer
      
-class ShedListado(ListView): 
+class ShedListado(LoginRequiredMixin,ListView): 
     model = Shed
  
-class ShedDetalle(DetailView): 
+class ShedDetalle(LoginRequiredMixin,DetailView): 
     model = Shed
  
-class ShedCrear(SuccessMessageMixin, CreateView): 
+class ShedCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
     model = Shed
     form = Shed
     fields = "__all__" 
@@ -54,7 +51,7 @@ class ShedCrear(SuccessMessageMixin, CreateView):
     def get_success_url(self):        
         return reverse('leer_shed') # Redireccionamos a la vista principal 'leer' 
  
-class ShedActualizar(SuccessMessageMixin, UpdateView): 
+class ShedActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = Shed
     form = Shed
     fields = "__all__"  
@@ -64,7 +61,7 @@ class ShedActualizar(SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leer_shed') # Redireccionamos a la vista principal 'leer' 
  
-class ShedEliminar(SuccessMessageMixin, DeleteView): 
+class ShedEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = Shed 
     form = Shed
     fields = "__all__"     
@@ -75,14 +72,14 @@ class ShedEliminar(SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('leer_shed') # Redireccionamos a la vista principal 'leer'
 
-class ShedProductionUpListado(ListView): 
+class ShedProductionUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
     queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="P").filter(shed__farm__name="Arriba")
 
-class ShedProductionUpDetalle(DetailView): 
+class ShedProductionUpDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
  
-class ShedProductionUpCrear(SuccessMessageMixin, CreateView): 
+class ShedProductionUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
     model = ShedRegister
     form = ShedRegister
     fields = "__all__" 
@@ -92,7 +89,7 @@ class ShedProductionUpCrear(SuccessMessageMixin, CreateView):
     def get_success_url(self):        
         return reverse('leer_shedprodcutionup') # Redireccionamos a la vista principal 'leer' 
  
-class ShedProductionUpActualizar(SuccessMessageMixin, UpdateView): 
+class ShedProductionUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
     form = ShedRegister
     fields = "__all__"  
@@ -102,7 +99,7 @@ class ShedProductionUpActualizar(SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leer_shedprodcutionup') # Redireccionamos a la vista principal 'leer' 
  
-class ShedProductionUpEliminar(SuccessMessageMixin, DeleteView): 
+class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
     form = ShedRegister
     fields = "__all__"     
@@ -113,14 +110,14 @@ class ShedProductionUpEliminar(SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('leer_shedprodcutionup') # Redireccionamos a la vista principal 'leer'
 
-class ShedProductionDownListado(ListView): 
+class ShedProductionDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
     queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="P").filter(shed__farm__name="Abajo")
 
-class ShedProductionDownDetalle(DetailView): 
+class ShedProductionDownDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
  
-class ShedProductionDownCrear(SuccessMessageMixin, CreateView): 
+class ShedProductionDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
     model = ShedRegister
     form = ShedRegister
     fields = "__all__" 
@@ -130,7 +127,7 @@ class ShedProductionDownCrear(SuccessMessageMixin, CreateView):
     def get_success_url(self):        
         return reverse('leer_shedprodcutiondown') # Redireccionamos a la vista principal 'leer' 
  
-class ShedProductionDownActualizar(SuccessMessageMixin, UpdateView): 
+class ShedProductionDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
     form = ShedRegister
     fields = "__all__"  
@@ -140,7 +137,7 @@ class ShedProductionDownActualizar(SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leer_shedprodcutiondown') # Redireccionamos a la vista principal 'leer' 
  
-class ShedProductionDownEliminar(SuccessMessageMixin, DeleteView): 
+class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
     form = ShedRegister
     fields = "__all__"     
@@ -151,15 +148,14 @@ class ShedProductionDownEliminar(SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('leer_shedprodcutiondown') # Redireccionamos a la vista principal 'leer'
 
-
-class ShedRaisedUpListado(ListView): 
+class ShedRaisedUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
     queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Arriba")
 
-class ShedRaisedUpDetalle(DetailView): 
+class ShedRaisedUpDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
  
-class ShedRaisedUpCrear(SuccessMessageMixin, CreateView): 
+class ShedRaisedUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
     model = ShedRegister
     form = ShedRegister
     fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
@@ -169,7 +165,7 @@ class ShedRaisedUpCrear(SuccessMessageMixin, CreateView):
     def get_success_url(self):        
         return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer' 
  
-class ShedRaisedUpActualizar(SuccessMessageMixin, UpdateView): 
+class ShedRaisedUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
     form = ShedRegister
     fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
@@ -179,7 +175,7 @@ class ShedRaisedUpActualizar(SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer' 
  
-class ShedRaisedUpEliminar(SuccessMessageMixin, DeleteView): 
+class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
     form = ShedRegister
     fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')

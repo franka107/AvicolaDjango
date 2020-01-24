@@ -61,7 +61,7 @@ ROOT_URLCONF = 'pidgeotto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,3 +131,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 STATICFILES_DIRS = [
     "/home/tecsup/Workplace/Avicola/pidgeotto-web/static"
 ]
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
