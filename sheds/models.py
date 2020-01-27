@@ -33,6 +33,7 @@ class Shed(models.Model):
     class Meta:
         verbose_name = "Shed"
         verbose_name_plural = "Sheds"
+        ordering = ('-type','farm')
 
     def __str__(self):
         return str(self.name) + " " + str(self.type) + " " + str(self.farm)  
