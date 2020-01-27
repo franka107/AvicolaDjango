@@ -41,11 +41,11 @@ media/*
 *.tar
 *.zip
 *.idea
-*.css
+#*.css
 *.map
-*.scss
-*.js
-*.png
+#*.scss
+#*.js
+#*.png
 *.svg
 
 # Logs and databases #
