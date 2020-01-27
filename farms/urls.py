@@ -1,5 +1,5 @@
 from django.urls import path
-from farms.views import FarmListado, FarmDetalle, FarmCrear, FarmActualizar, FarmEliminar
+from farms.views import FarmListado, FarmDetalle, FarmCrear, FarmActualizar #FarmEliminar
 from . import views
  
 from django.conf import settings
@@ -23,5 +23,5 @@ urlpatterns = [
     path('farm/editar/<int:pk>', FarmActualizar.as_view(template_name = "farm/actualizar.html"), name='actualizar_farm'), 
  
     # La ruta 'eliminar' que usaremos para eliminar un postre o registro de la Base de Datos 
-    path('farm/eliminar/<int:pk>', FarmEliminar.as_view(), name='eliminar_farm'),    
+    #path('farm/eliminar/<int:pk>', FarmEliminar.as_view(), name='eliminar_farm'),    
 ]

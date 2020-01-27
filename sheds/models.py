@@ -36,7 +36,7 @@ class Shed(models.Model):
         verbose_name_plural = "Sheds"
 
     def __str__(self):
-        return str(self.name) + str(self.type) + str(self.farm)  
+        return str(self.name) + " " + str(self.type) + " " + str(self.farm)  
 
     def get_absolute_url(self):
         return reverse("Shed_detail", kwargs={"pk": self.pk})

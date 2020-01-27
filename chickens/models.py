@@ -1,5 +1,7 @@
 from django.db import models
 from sheds.models import Shed
+from django.utils import timezone
+
 # Create your models here.
 
 class Promotion(models.Model):
@@ -17,8 +19,9 @@ class Promotion(models.Model):
         Shed,
         on_delete=models.CASCADE
     )
+    
     quantity = models.IntegerField()
-    week_age = models.IntegerField(default=0)
+    
     entry_date = models.DateField()
     chicken_type = models.CharField(
         max_length =3,
@@ -28,12 +31,15 @@ class Promotion(models.Model):
         default=True,
     )
     created = models.DateTimeField(
-        auto_now_add=True,
     )
     updated = models.DateTimeField(
         auto_now=True,
     )
-    
+    def _get_final(self):
+        return round((timezone.now()-self.created).days/7,0)
+       
+    week_age = property(_get_final)
+
 
     class Meta:
         verbose_name = "Promotion"

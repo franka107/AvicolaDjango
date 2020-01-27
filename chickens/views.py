@@ -18,9 +18,9 @@ class PromotionCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = Promotion
     form = Promotion
     fields = "__all__" 
-    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Promocion Creada Correctamente !' # Mostramos este Mensaje luego de Crear un Promocion     
  
-    # Redireccionamos a la página principal luego de crear un registro o postre
+    # Redireccionamos a la página principal luego de crear un registro o Promocion
     def get_success_url(self):        
         return reverse('leer_promotion') # Redireccionamos a la vista principal 'leer' 
  
@@ -28,9 +28,9 @@ class PromotionActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     model = Promotion
     form = Promotion
     fields = "__all__"  
-    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Promocion Actualizada Correctamente !' # Mostramos este Mensaje luego de Editar un Promocion 
  
-    # Redireccionamos a la página principal luego de actualizar un registro o postre
+    # Redireccionamos a la página principal luego de actualizar un registro o Promocion
     def get_success_url(self):               
         return reverse('leer_promotion') # Redireccionamos a la vista principal 'leer' 
  
@@ -39,8 +39,8 @@ class PromotionEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
     form = Promotion
     fields = "__all__"     
  
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
+    # Redireccionamos a la página principal luego de eliminar un registro o Promocion
     def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Promocion Eliminada Correctamente !' # Mostramos este Mensaje luego de Editar un Promocion 
         messages.success (self.request, (success_message))       
         return reverse('leer_promotion') # Redireccionamos a la vista principal 'leer'

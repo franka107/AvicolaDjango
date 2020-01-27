@@ -185,3 +185,42 @@ class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
         success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
         return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer'        
+
+
+class ShedRaisedDownListado(LoginRequiredMixin,ListView): 
+    model = ShedRegister
+    queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Abajo")
+
+class ShedRaisedDownDetalle(LoginRequiredMixin,DetailView): 
+    model = ShedRegister
+ 
+class ShedRaisedDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
+    model = ShedRegister
+    form = ShedRegister
+    fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
+    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+ 
+    # Redireccionamos a la página principal luego de crear un registro o postre
+    def get_success_url(self):        
+        return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
+ 
+class ShedRaisedDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
+    model = ShedRegister
+    form = ShedRegister
+    fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
+    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+ 
+    # Redireccionamos a la página principal luego de actualizar un registro o postre
+    def get_success_url(self):               
+        return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
+ 
+class ShedRaisedDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
+    model = ShedRegister 
+    form = ShedRegister
+    fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
+ 
+    # Redireccionamos a la página principal luego de eliminar un registro o postre
+    def get_success_url(self): 
+        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        messages.success (self.request, (success_message))       
+        return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 

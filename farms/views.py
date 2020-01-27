@@ -41,13 +41,13 @@ class FarmActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leer_farm') # Redireccionamos a la vista principal 'leer' 
  
-class FarmEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
-    model = Farm 
-    form = Farm
-    fields = "__all__"     
- 
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
-    def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
-        messages.success (self.request, (success_message))       
-        return reverse('leer_farm') # Redireccionamos a la vista principal 'leer'
+#class FarmEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
+#    model = Farm 
+#    form = Farm
+#    fields = "__all__"     
+# 
+# # Redireccionamos a la página principal luego de eliminar un registro o postre
+#    def get_success_url(self): 
+#        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+#        messages.success (self.request, (success_message))       
+#        return reverse('leer_farm') # Redireccionamos a la vista principal 'leer'

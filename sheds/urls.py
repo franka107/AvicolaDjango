@@ -3,9 +3,11 @@ from rest_framework import routers
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static 
-from sheds.views import ShedListado, ShedDetalle, ShedCrear, ShedActualizar, ShedEliminar,ShedProductionUpListado, ShedProductionUpDetalle, ShedProductionUpCrear, ShedProductionUpActualizar, ShedProductionUpEliminar
+from sheds.views import ShedListado, ShedDetalle, ShedCrear, ShedActualizar, ShedEliminar
+from sheds.views import ShedProductionUpListado, ShedProductionUpDetalle, ShedProductionUpCrear, ShedProductionUpActualizar, ShedProductionUpEliminar
 from sheds.views import ShedProductionDownListado,ShedProductionDownDetalle,ShedProductionDownCrear,ShedProductionDownActualizar,ShedProductionDownEliminar
 from sheds.views import ShedRaisedUpListado,ShedRaisedUpDetalle,ShedRaisedUpCrear,ShedRaisedUpActualizar,ShedRaisedUpEliminar
+from sheds.views import ShedRaisedDownListado,ShedRaisedDownDetalle,ShedRaisedDownCrear,ShedRaisedDownActualizar,ShedRaisedDownEliminar
 router = routers.DefaultRouter()
 router.register(r'sheds', views.ShedViewSet)
 router.register(r'productionup', views.ShedProductionUpViewSet)
@@ -17,11 +19,14 @@ router.register(r'raiseddown', views.ShedRaisedDownViewSet)
 
 urlpatterns = [
 
+
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
 
     path('api/', include(router.urls)),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
 
@@ -77,5 +82,19 @@ urlpatterns = [
     path('raisedup/editar/<int:pk>', ShedRaisedUpActualizar.as_view(template_name = "shed/raisedup/actualizar.html"), name='actualizar_shedraisedup'), 
  
     path('raisedup/eliminar/<int:pk>', ShedRaisedUpEliminar.as_view(), name='eliminar_shedraisedup'), 
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
+
+    path('raiseddown/', ShedRaisedDownListado.as_view(template_name = "shed/raiseddown/lista.html"), name='leer_shedraiseddown'),
+ 
+    path('raiseddown/detalle/<int:pk>', ShedRaisedDownDetalle.as_view(template_name = "shed/raiseddown/detalles.html"), name='detalles_shedraiseddown'),
+ 
+    path('raiseddown/crear', ShedRaisedDownCrear.as_view(template_name = "shed/raiseddown/crear.html"), name='crear_shedraiseddown'),
+ 
+    path('raiseddown/editar/<int:pk>', ShedRaisedDownActualizar.as_view(template_name = "shed/raiseddown/actualizar.html"), name='actualizar_shedraiseddown'), 
+ 
+    path('raiseddown/eliminar/<int:pk>', ShedRaisedDownEliminar.as_view(), name='eliminar_shedraiseddown'), 
 
 ]
