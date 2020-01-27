@@ -23,6 +23,9 @@ urlpatterns = [
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
+    
     path('', ShedListado.as_view(template_name = "shed/lista.html"), name='leer_shed'),
  
     path('detalle/<int:pk>', ShedDetalle.as_view(template_name = "shed/detalles.html"), name='detalles_shed'),

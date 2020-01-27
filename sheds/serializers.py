@@ -3,27 +3,27 @@ from .models import Shed
 from .models import ShedRegister 
 from farms.models import Farm
 
-class ShedSerializer(serializers.HyperlinkedModelSerializer):
+class ShedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shed
-        fields = ('name','created','updated','type')
+        fields = ('name','farm','created','updated','type')
 
-class ShedProductionUpSerializer(serializers.HyperlinkedModelSerializer):
+class ShedProductionUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShedRegister
         fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
 
-class ShedProductionDownSerializer(serializers.HyperlinkedModelSerializer):
+class ShedProductionDownSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShedRegister
         fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
 
-class ShedRaisedUpSerializer(serializers.HyperlinkedModelSerializer):
+class ShedRaisedUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShedRegister
         fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
 
-class ShedRaisedDownSerializer(serializers.HyperlinkedModelSerializer):
+class ShedRaisedDownSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShedRegister
         fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')

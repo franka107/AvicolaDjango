@@ -1,5 +1,6 @@
 from django.db import models
 from farms.models import Farm 
+
 # Create your models here.
 
 class Shed(models.Model):
@@ -21,7 +22,7 @@ class Shed(models.Model):
         unique=True)
     is_active = models.BooleanField(
         default=True,
-    )
+    ) 
     created = models.DateTimeField(
         auto_now_add=True,
     )
@@ -35,7 +36,7 @@ class Shed(models.Model):
         verbose_name_plural = "Sheds"
 
     def __str__(self):
-        return self.name
+        return str(self.name) + str(self.type) + str(self.farm)  
 
     def get_absolute_url(self):
         return reverse("Shed_detail", kwargs={"pk": self.pk})
@@ -60,12 +61,13 @@ class ShedRegister(models.Model):
     food_consumption = models.IntegerField(default=0)
     #Saldo final
     final_deposit = models.IntegerField(default=0)
-    #ingreso de pollos
+    #total de pollos
     #chicken_income = models.IntegerField(default=0)
     #muerte de pollos
     chicken_death = models.IntegerField(default=0)
     #Observacion(opcional)
     observation =  models.TextField(blank=True)
+    
 
 
     #total de paquetes ( solo en produccion )

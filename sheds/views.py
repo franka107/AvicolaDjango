@@ -121,7 +121,7 @@ class ShedProductionDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView
     model = ShedRegister
     form = ShedRegister
     fields = "__all__" 
-    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Creado Correctamente !'
  
     # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
