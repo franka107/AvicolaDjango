@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class PromotionListado(LoginRequiredMixin,ListView): 
     model = Promotion
  
@@ -44,3 +45,5 @@ class PromotionEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
         success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
         return reverse('leer_promotion') # Redireccionamos a la vista principal 'leer'
+
+
