@@ -18,8 +18,7 @@ class Shed(models.Model):
         choices= TYPE_CHOICES
     )
     name = models.CharField(
-        max_length=50,
-        unique=True)
+        max_length=50)
     is_active = models.BooleanField(
         default=True,
     ) 
