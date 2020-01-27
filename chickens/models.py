@@ -31,6 +31,7 @@ class Promotion(models.Model):
         default=True,
     )
     created = models.DateTimeField(
+        auto_now=True,
     )
     updated = models.DateTimeField(
         auto_now=True,
