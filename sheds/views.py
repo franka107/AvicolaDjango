@@ -87,7 +87,7 @@ class ShedProductionUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
  
     # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shedprodcutionup') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer' 
  
 class ShedProductionUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
@@ -97,7 +97,7 @@ class ShedProductionUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateV
  
     # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shedprodcutionup') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer' 
  
 class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
@@ -108,7 +108,7 @@ class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteVie
     def get_success_url(self): 
         success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shedprodcutionup') # Redireccionamos a la vista principal 'leer'
+        return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer'
 
 class ShedProductionDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
@@ -125,7 +125,7 @@ class ShedProductionDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView
  
     # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shedprodcutiondown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer' 
  
 class ShedProductionDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
@@ -135,7 +135,7 @@ class ShedProductionDownActualizar(LoginRequiredMixin,SuccessMessageMixin, Updat
  
     # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shedprodcutiondown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer' 
  
 class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
@@ -146,7 +146,7 @@ class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteV
     def get_success_url(self): 
         success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shedprodcutiondown') # Redireccionamos a la vista principal 'leer'
+        return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer'
 
 class ShedRaisedUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
