@@ -18,7 +18,8 @@ class Shed(models.Model):
         choices= TYPE_CHOICES
     )
     name = models.CharField(
-        max_length=50)
+        max_length=50,
+        unique=True)
     is_active = models.BooleanField(
         default=True,
     ) 
@@ -36,7 +37,7 @@ class Shed(models.Model):
         ordering = ('-type','farm')
 
     def __str__(self):
-        return str(self.name) + " " + str(self.type) + " " + str(self.farm)  
+        return str(self.name)
 
     def get_absolute_url(self):
         return reverse("Shed_detail", kwargs={"pk": self.pk})

@@ -13,6 +13,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .filters import ShedRegisterFilter
+
+#-----------------------------------------------------------------------------------------------------------------------#
+# Filtro de Opciones Views
 
 class ProductionForm(forms.ModelForm):
     class Meta:
@@ -24,6 +28,7 @@ class ProductionForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['shed'].queryset = self.fields['shed'].queryset.filter(
             type=type).filter(farm__name=farm)
+
 class RaisedForm(forms.ModelForm):
     class Meta:
         model = ShedRegister
@@ -34,6 +39,9 @@ class RaisedForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['shed'].queryset = self.fields['shed'].queryset.filter(
             type=type).filter(farm__name=farm)
+
+#-----------------------------------------------------------------------------------------------------------------------#
+# Datos API
 
 class ShedViewSet(viewsets.ModelViewSet):
     queryset = Shed.objects.all().order_by('name')
@@ -55,7 +63,10 @@ class ShedRaisedUpViewSet(viewsets.ModelViewSet):
 class ShedRaisedDownViewSet(viewsets.ModelViewSet):
     queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Abajo")
     serializer_class = ShedRaisedDownSerializer
-     
+
+#-----------------------------------------------------------------------------------------------------------------------#
+# CRUD Galpones
+
 class ShedListado(LoginRequiredMixin,ListView): 
     model = Shed
  
@@ -93,9 +104,17 @@ class ShedEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('leer_shed') # Redireccionamos a la vista principal 'leer'
 
+#-----------------------------------------------------------------------------------------------------------------------#
+# CRUD Produccion Granja Arriba
+
 class ShedProductionUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="P").filter(shed__farm__name="Arriba")
+    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba")
+
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+            return context 
 
 class ShedProductionUpDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
@@ -140,9 +159,17 @@ class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteVie
         messages.success (self.request, (success_message))       
         return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer'
 
+#-----------------------------------------------------------------------------------------------------------------------#
+# CRUD Produccion Granja Abajo
+
 class ShedProductionDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="P").filter(shed__farm__name="Abajo")
+    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+        return context 
 
 class ShedProductionDownDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
@@ -186,9 +213,17 @@ class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteV
         messages.success (self.request, (success_message))       
         return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer'
 
+#-----------------------------------------------------------------------------------------------------------------------#
+# CRUD Levante Granja Arriba
+
 class ShedRaisedUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Arriba")
+    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Arriba")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+        return context 
 
 class ShedRaisedUpDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
@@ -232,10 +267,17 @@ class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer'        
 
+#-----------------------------------------------------------------------------------------------------------------------#
+# CRUD Levante Granja Abajo
 
 class ShedRaisedDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(date = timezone.now()).filter(shed__type="L").filter(shed__farm__name="Abajo")
+    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Abajo")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+        return context 
 
 class ShedRaisedDownDetalle(LoginRequiredMixin,DetailView): 
     model = ShedRegister
