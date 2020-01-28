@@ -21,14 +21,9 @@
       <th>Consumo</th>
       <th>Saldo Final</th>
       <th>Muertes</th>
-      <th>Total Paquetes</th>
-      <th>Total Unidades</th>
       <th>Tipo de Comida</th>
       <th>Precio de Alimento</th>
-      <th>Porcentaje de Postura</th>
-      <th>Conversion</th>
       <th>Peso de Gallina</th>
-      <th>Peso de huevo</th>
       <th>Acciones</th>
     </tr>
   </thead>
@@ -44,14 +39,9 @@
       <td>{{ shedregister.food_consumption }}</td>
       <td>{{ shedregister.final_deposit }}</td>
       <td>{{ shedregister.chicken_death }}</td>
-      <td>{{ shedregister.package_total }}</td>
-      <td>{{ shedregister.leftover_eggs }}</td>
       <td>{{ shedregister.food_type }}</td>
       <td>{{ shedregister.food_price }}</td>
-      <td>{{ shedregister.posture_percentaje }}</td>
-      <td>{{ shedregister.convertion }}</td>
       <td>{{ shedregister.chicken_weight }}</td>
-      <td>{{ shedregister.egg_weight }}</td>
       <td>        
         <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o postre desde la misma tabla HTML -->                        
         <form method="POST" action="eliminar/{{shedregister.id}}">

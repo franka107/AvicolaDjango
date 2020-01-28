@@ -1,6 +1,7 @@
 from django.db import models
 from sheds.models import Shed
 from django.utils import timezone
+from datetime import date
 
 # Create your models here.
 
@@ -36,8 +37,9 @@ class Promotion(models.Model):
     updated = models.DateTimeField(
         auto_now=True,
     )
+
     def _get_final(self):
-        return round((timezone.now()-self.created).days/7,0)
+        return round((date.today()-self.entry_date).days/7,0)
        
     week_age = property(_get_final)
 

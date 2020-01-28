@@ -19,12 +19,8 @@
     {{ form.quantity }} 
   </div>
   <div class="form-group">
-    <label for="week_age" class="txt_negrita">Edad en Semana</label>
-    {{ form.week_age }} 
-  </div>
-  <div class="form-group">
     <label for="entry_date" class="txt_negrita">Fecha de Entrada</label>
-    {{ form.entry_date }} 
+    <input style="margin: .4rem 0;" type="date" id="start" name="entry_date" value="{{ object.entry_date|date:'Y-m-d' }}"> 
   </div>
   <div class="form-group">
     <label for="chicken_type" class="txt_negrita">Tipo de Gallina</label>
