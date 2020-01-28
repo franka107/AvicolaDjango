@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'chickens.apps.ChickensConfig',
     'rest_framework',
     'corsheaders',
-    'django_filters',
 ]
 
 MIDDLEWARE = [
