@@ -1,17 +1,18 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}
-{% if messages %}
-  <ul class="messages list-group mb-3">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}  
+<h1>Galpones</h1>
 <div align="left" class="btn_crear mb-3">
-  <a href="crear"  class="btn btn-primary">Crear</a>
+  <a href="crear"  class="btn btn-primary">Crear Nuevo Galpon</a>
 </div>
 <table class="table table-striped table-hover">
+  {% if messages %}
+    <ul class="messages list-group mb-3">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}  
   <thead>
     <tr>
       <th width="35%">Nombre</th>
