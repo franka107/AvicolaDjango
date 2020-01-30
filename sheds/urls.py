@@ -97,4 +97,11 @@ urlpatterns = [
  
     path('raiseddown/eliminar/<int:pk>', ShedRaisedDownEliminar.as_view(), name='eliminar_shedraiseddown'), 
 
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
+
+
+    path('report/production',views.ReportsProductions, name='production'),
+
+
 ]

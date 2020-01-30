@@ -1,0 +1,73 @@
+{% extends 'farm/base.html' %}
+{% block content %}
+{% load static %}
+  <h1>
+    Galpones de Postura
+  </h1>
+  <h4>
+    Granja de Abajo
+  </h4>
+    <form method="GET" class="mb-3" >
+        <div class="row d-flex justify-content-end">
+            <div class="mr-5">
+                <label style="margin: .4rem 0;" for="start" class="txt_negrita">Fecha Minima</label>
+                <input style="margin: .4rem 0;" type="date" id="start" name="min_date">
+            </div>
+            <div class="mr-5">
+                <label style="margin: .4rem 0;" for="start" class="txt_negrita">Fecha Maxima</label>
+                <input style="margin: .4rem 0;" type="date" id="start" name="max_date">
+            </div>
+            <div class="mr-3">
+                <button type="submit" class="btn btn-primary">Filtrar</button>    
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-12">
+            {% regroup queryset by shed as shed_items %}
+            <table class="table table-striped table-hover table-bordered text-center">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>  
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>
+                    <th>T.P</th>
+                    <th>T.U</th>
+                    <th>Fecha</th>
+                    </tr>
+                
+                </thead>
+                <tbody>
+                {% for shed in shed_items %}
+                <tr>
+                    <td>{{ shed.grouper }}</td>
+                    {% for shedregister in shed.list|dictsort:"date" %}
+                    <td>{{ shedregister.package_total }}</td>
+                    <td>{{ shedregister.leftover_eggs }}</td>
+                     <td>{{ shedregister.date|date:'D j' }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>  
+
+{% endblock %} 
+ 

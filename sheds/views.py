@@ -109,7 +109,7 @@ class ShedEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
 
 class ShedProductionUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba")
+    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
@@ -164,7 +164,7 @@ class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteVie
 
 class ShedProductionDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo")
+    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -218,7 +218,7 @@ class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteV
 
 class ShedRaisedUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Arriba")
+    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Arriba").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -272,7 +272,7 @@ class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
 
 class ShedRaisedDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Abajo")
+    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Abajo").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -311,6 +311,7 @@ class ShedRaisedDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateVie
         return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
  
 class ShedRaisedDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
+
     model = ShedRegister 
     form = ShedRegister
     fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
@@ -320,3 +321,26 @@ class ShedRaisedDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView)
         success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
         return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
+
+#-----------------------------------------------------------------------------------------------------------------------#
+# Funciones
+
+def is_valid_queryparam(param):
+    return param != '' and param is not None
+
+# Reportes
+
+def ReportsProductions(request):
+    qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('shed')
+    min_date = request.GET.get('min_date')
+    max_date = request.GET.get('max_date')
+    if is_valid_queryparam(min_date):
+        qs = qs.filter(date__gte=min_date).filter(shed__type="P").filter(shed__farm__name="Abajo")
+
+    if is_valid_queryparam(max_date):
+        qs = qs.filter(date__lte=max_date).filter(shed__type="P").filter(shed__farm__name="Abajo")
+
+    context = {
+        'queryset' : qs,
+    }    
+    return render(request,"shed/reports/productions.html",context)
