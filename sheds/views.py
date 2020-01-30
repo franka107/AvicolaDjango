@@ -14,6 +14,9 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .filters import ShedRegisterFilter
+from datetime import datetime, date, time, timedelta
+import calendar
+from django.utils.dateparse import parse_date
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # Filtro de Opciones Views
@@ -331,16 +334,44 @@ def is_valid_queryparam(param):
 # Reportes
 
 def ReportsProductions(request):
-    qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('shed')
     min_date = request.GET.get('min_date')
     max_date = request.GET.get('max_date')
+    hoy = date.today()  # Asigna fecha actual
+    dia1 = None  
+    dia2 = None
+    dia3 = None
+    dia4 = None
+    dia5 = None
+    dia6 = None
+    dia7 = None
+    if min_date == None:
+        qs = ShedRegister.objects.filter(date=date.today()).filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('shed')
+        dia1 = hoy
+    else:
+        qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('shed')
+
     if is_valid_queryparam(min_date):
         qs = qs.filter(date__gte=min_date).filter(shed__type="P").filter(shed__farm__name="Abajo")
+        dia1 = parse_date(min_date) 
+        dia2 = dia1 + timedelta(days=1)
+        dia3 = dia2 + timedelta(days=1)
+        dia4 = dia3 + timedelta(days=1)
+        dia5 = dia4 + timedelta(days=1)
+        dia6 = dia5 + timedelta(days=1)
+        dia7 = dia6 + timedelta(days=1)
 
     if is_valid_queryparam(max_date):
         qs = qs.filter(date__lte=max_date).filter(shed__type="P").filter(shed__farm__name="Abajo")
-
+    
     context = {
         'queryset' : qs,
+        'd1' : dia1,
+        'd2' : dia2,
+        'd3' : dia3,
+        'd4' : dia4,
+        'd5' : dia5,
+        'd6' : dia6,
+        'd7' : dia7,
+        'min_date' : min_date, 
     }    
     return render(request,"shed/reports/productions.html",context)
