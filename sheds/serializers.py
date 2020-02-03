@@ -9,7 +9,7 @@ class FarmSerializer(serializers.ModelSerializer):
         fields = ('id','name')
 
 class ShedSerializer(serializers.ModelSerializer):
-    farm = FarmSerializer()
+    farm = FarmSerializer(read_only=True)
     class Meta:
         model = Shed
         fields = ('id','name','farm')
