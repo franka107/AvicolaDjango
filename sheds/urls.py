@@ -1,4 +1,5 @@
 from django.urls import include, path
+from django.conf.urls import url
 from rest_framework import routers
 from . import views
 from django.conf import settings
@@ -101,7 +102,6 @@ urlpatterns = [
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
 
 
-    path('report/production',views.ReportsProductions, name='production'),
-
+    path('report/production/',views.ReportsProductions, name='production'),
 
 ]

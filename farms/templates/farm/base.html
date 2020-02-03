@@ -9,6 +9,10 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{% static 'csscrud/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'report/css/report.css' %}">
+	<script src="{% static 'report/xlsx.full.min.js' %}"></script>
+    <script src="{% static 'report/FileSaver.min.js' %}"></script>
+    <script src="{% static 'report/tableexport.min.js' %}"></script>
 </head>
   <body>
 	<div class="wrapper d-flex align-items-stretch">
@@ -46,9 +50,6 @@
 				</li>
 				<li>
 				<a href="{% url 'leer_shedraiseddown' %}"><span class="fa fa-arrow-circle-down mr-3"></span> Levante Abajo </a>
-				</li>
-				<li>
-					<a href="{% url 'leer_shedraiseddown' %}"><span class="fa fa-arrow-circle-down mr-3"></span> Levante Abajo </a>
 				</li>
 				<li>
 					<a href="{% url 'production' %}"><span class="fa fa-newspaper-o mr-3"></span> Reporte Produccion </a>

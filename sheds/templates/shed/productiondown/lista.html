@@ -2,22 +2,22 @@
 {% block content %}
 {% load static %}
   <h1>
-    Galpones de Postura
+    <span class="fa fa-home mr-2"></span>Galpones de Postura
   </h1>
   <h4>
-    Granja de Abajo
+    <span class="fa fa-arrow-down mr-2"></span>Granja de Abajo
   </h4>
   <div class="row">
     <div class="col-7">
       <div class="btn_crear mb-3">
-        <a href="crear"  class="btn btn-primary">Crear Nuevo Registro</a>
+        <a href="crear"  class="btn btn-primary"><span class="fa fa-file-text mr-2"></span>Crear Nuevo Registro</a>
       </div>
     </div>
     <div class="col-5 d-flex justify-content-end">
       <form method="GET" class="mb-3" >
         <label style="margin: .4rem 0;" for="start" class="txt_negrita">Fecha</label>
         <input style="margin: .4rem 0;" type="date" id="start" name="date">
-        <button type="submit" class="btn btn-primary">Filtrar</button>        
+        <button type="submit" class="btn btn-primary"><span class="fa fa-filter mr-2"></span>Filtrar</button>        
       </form>
     </div>
   </div>
@@ -77,8 +77,8 @@
           <div class="btn-group">
  
             <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-            <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success">Ver </a>
-            <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary">Editar </a>
+            <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
+            <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>
             <!--<button class="btn btn-danger" onclick="return eliminar();" type="submit">
               Eliminar
             </button>-->
