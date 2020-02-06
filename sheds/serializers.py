@@ -15,14 +15,38 @@ class ShedSerializer(serializers.ModelSerializer):
         fields = ('id','farm','name')
 
 class ShedProductionUpSerializer(serializers.ModelSerializer):
+    shed = ShedSerializer(many = False, read_only= True)
+    
+    shed_id = serializers.PrimaryKeyRelatedField(
+        write_only = True,
+        queryset =  Shed.objects.all(),
+        source= 'shed'
+    )
+
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
+
+    def create(self, validated_data):
+        shed_register = ShedRegister.objects.create(**validated_data)
+        return shed_register       
 
 class ShedProductionDownSerializer(serializers.ModelSerializer):
+    shed = ShedSerializer(many = False, read_only= True)
+    
+    shed_id = serializers.PrimaryKeyRelatedField(
+        write_only = True,
+        queryset =  Shed.objects.all(),
+        source= 'shed'
+    )
+
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
+
+    def create(self, validated_data):
+        shed_register = ShedRegister.objects.create(**validated_data)
+        return shed_register
 
 class ShedRaisedUpSerializer(serializers.ModelSerializer):
     shed = ShedSerializer(many = False, read_only= True)
@@ -32,6 +56,7 @@ class ShedRaisedUpSerializer(serializers.ModelSerializer):
         queryset =  Shed.objects.all(),
         source= 'shed'
     )
+
     class Meta:
         model = ShedRegister
         fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
@@ -42,6 +67,18 @@ class ShedRaisedUpSerializer(serializers.ModelSerializer):
 
 
 class ShedRaisedDownSerializer(serializers.ModelSerializer):
+    shed = ShedSerializer(many = False, read_only= True)
+    
+    shed_id = serializers.PrimaryKeyRelatedField(
+        write_only = True,
+        queryset =  Shed.objects.all(),
+        source= 'shed'
+    )
+
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
+
+    def create(self, validated_data):
+        shed_register = ShedRegister.objects.create(**validated_data)
+        return shed_register

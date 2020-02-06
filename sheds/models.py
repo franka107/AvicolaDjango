@@ -13,7 +13,7 @@ class Shed(models.Model):
     farm = models.ForeignKey(
         Farm,
         on_delete=models.CASCADE
-    )
+    ) 
     type = models.CharField(
         max_length=2,
         choices= TYPE_CHOICES
