@@ -130,7 +130,7 @@ STATIC_ROOT = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
 
 STATICFILES_DIRS = [
-    "/home/tecsup/Workplace/Avicola/pidgeotto-web/static"
+        os.path.join(BASE_DIR, "static"),
 ]
 LOGIN_REDIRECT_URL = '/'
 
