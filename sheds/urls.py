@@ -103,5 +103,7 @@ urlpatterns = [
 
 
     path('report/production/',views.ReportsProductions, name='production'),
+    path('report/shedp/',views.ReportsShedProduction, name='shedP'),
+    path('report/shedr/',views.ReportsShedRaised, name='shedR'),
 
 ]

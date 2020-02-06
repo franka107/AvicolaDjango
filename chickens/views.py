@@ -17,7 +17,7 @@ class PromotionDetalle(LoginRequiredMixin,DetailView):
 class PromotionCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
     model = Promotion
     form = Promotion
-    fields = ('name','shed','quantity','entry_date','chicken_type','is_active') 
+    fields = "__all__" 
     success_message = 'Promocion Creada Correctamente !' # Mostramos este Mensaje luego de Crear un Promocion     
  
     # Redireccionamos a la página principal luego de crear un registro o Promocion
@@ -27,7 +27,7 @@ class PromotionCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
 class PromotionActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = Promotion
     form = Promotion
-    fields = ('name','shed','quantity','entry_date','chicken_type','is_active') 
+    fields = "__all__" 
     success_message = 'Promocion Actualizada Correctamente !' # Mostramos este Mensaje luego de Editar un Promocion 
  
     # Redireccionamos a la página principal luego de actualizar un registro o Promocion

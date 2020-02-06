@@ -65,7 +65,7 @@
                     <td style="border: 1px solid black; border-right: 4px solid black;">{{ shed.grouper }}</td>
                     {% for shedregister in shed.list|dictsort:"date" %}
                     <td>{{ shedregister.package_total }}</td>
-                    <td style="border-right: 4px solid black;">{{ shedregister.leftover_eggs }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.date }}</td>
                     {% endfor %}
                 </tr>
                 {% endfor %}

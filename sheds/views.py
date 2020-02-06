@@ -19,6 +19,7 @@ import calendar
 from django.utils.dateparse import parse_date
 from django.views.generic.base import TemplateView
 from openpyxl import Workbook
+from django.core.paginator import Paginator
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # Filtro de Opciones Views
@@ -31,8 +32,9 @@ class ProductionForm(forms.ModelForm):
         farm = kwargs.pop('farm', None)
         type = kwargs.pop('type', None)        
         super().__init__(*args, **kwargs)
-        self.fields['shed'].queryset = self.fields['shed'].queryset.filter(
-            type=type).filter(farm__name=farm)
+        self.fields['shed'].queryset = self.fields['shed'].queryset.filter(type=type).filter(farm__name=farm)
+        #self.fields['age_chicken'].disabled = True
+
 
 class RaisedForm(forms.ModelForm):
     class Meta:
@@ -82,7 +84,7 @@ class ShedCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = Shed
     form = Shed
     fields = "__all__" 
-    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Galpon Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
  
     # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
@@ -92,7 +94,7 @@ class ShedActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     model = Shed
     form = Shed
     fields = "__all__"  
-    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Galpon Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
  
     # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
@@ -114,11 +116,16 @@ class ShedEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
 
 class ShedProductionUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").order_by('date','shed')
+    def get_queryset(self):
+        if self.request.GET.get('date') == None:
+            return ShedRegister.objects.filter(date=date.today()).filter(shed__type="P").filter(shed__farm__name="Arriba").order_by('date','shed')
+        else:
+            return ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+            context['filter'] = ShedRegisterFilter(self.request.GET, queryset = self.get_queryset())
+            context['hoy'] = date.today() 
             return context 
 
 class ShedProductionUpDetalle(LoginRequiredMixin,DetailView): 
@@ -128,7 +135,7 @@ class ShedProductionUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = ShedRegister
     form = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba")
     form_class = ProductionForm
-    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Registro Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -143,7 +150,7 @@ class ShedProductionUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateV
     model = ShedRegister
     form = ShedRegister
     form_class = ProductionForm
-    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['farm'] = "Arriba"
@@ -169,11 +176,16 @@ class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteVie
 
 class ShedProductionDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('date','shed')
+    def get_queryset(self):
+        if self.request.GET.get('date') == None:
+            return ShedRegister.objects.filter(date=date.today()).filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('date','shed')
+        else:
+            return  ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+        context['hoy'] = date.today() 
         return context 
 
 class ShedProductionDownDetalle(LoginRequiredMixin,DetailView): 
@@ -183,7 +195,7 @@ class ShedProductionDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView
     model = ShedRegister
     form = ShedRegister
     form_class = ProductionForm
-    success_message = 'Creado Correctamente !'
+    success_message = 'Registro Creado Correctamente !'
     def get_form_kwargs(self):
             kwargs = super().get_form_kwargs()
             kwargs['type'] = "P"
@@ -197,7 +209,7 @@ class ShedProductionDownActualizar(LoginRequiredMixin,SuccessMessageMixin, Updat
     model = ShedRegister
     form = ShedRegister
     form_class = ProductionForm
-    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "P"
@@ -214,7 +226,7 @@ class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteV
  
     # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Registro Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
         return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer'
 
@@ -223,11 +235,16 @@ class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteV
 
 class ShedRaisedUpListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Arriba").order_by('date','shed')
+    def get_queryset(self):
+        if self.request.GET.get('date') == None:
+            return ShedRegister.objects.filter(date=date.today()).filter(shed__type="L").filter(shed__farm__name="Arriba").order_by('date','shed')
+        else:
+            return  ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Arriba").order_by('date','shed')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+        context['hoy'] = date.today() 
         return context 
 
 class ShedRaisedUpDetalle(LoginRequiredMixin,DetailView): 
@@ -237,7 +254,7 @@ class ShedRaisedUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Registro Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
@@ -251,7 +268,7 @@ class ShedRaisedUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView)
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
@@ -268,7 +285,7 @@ class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
  
     # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Registro Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
         return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer'        
 
@@ -277,11 +294,15 @@ class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
 
 class ShedRaisedDownListado(LoginRequiredMixin,ListView): 
     model = ShedRegister
-    queryset = ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Abajo").order_by('date','shed')
-
+    def get_queryset(self):
+        if self.request.GET.get('date') == None:
+            return ShedRegister.objects.filter(date=date.today()).filter(shed__type="L").filter(shed__farm__name="Abajo").order_by('date','shed')
+        else:
+            return  ShedRegister.objects.filter(shed__type="L").filter(shed__farm__name="Abajo").order_by('date','shed')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = ShedRegisterFilter(self.request.GET, queryset=self.get_queryset())
+        context['hoy'] = date.today() 
         return context 
 
 class ShedRaisedDownDetalle(LoginRequiredMixin,DetailView): 
@@ -291,7 +312,7 @@ class ShedRaisedDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Postre Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Registro Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
@@ -305,7 +326,7 @@ class ShedRaisedDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateVie
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Postre Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
@@ -323,7 +344,7 @@ class ShedRaisedDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView)
  
     # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Registro Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
         messages.success (self.request, (success_message))       
         return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
 
@@ -375,3 +396,65 @@ def ReportsProductions(request):
         'min_date' : min_date, 
     }    
     return render(request,"shed/reports/productions.html",context)
+
+def ReportsShedProduction(request):
+    shed = request.GET.get('shed')
+    month = request.GET.get('date')
+    mes = timezone.now() - timedelta(days=27)
+    qs = ShedRegister.objects.filter(shed__type="P").order_by('date')
+    qss = Shed.objects.filter(type="P").order_by('name')
+    #if date == None:
+    #    qs = ShedRegister.objects.filter(shed__type="P").filter(date__gte=mes).order_by('date')
+    #elif date == "":
+    #    qs = ShedRegister.objects.filter(shed__type="P").filter(date__gte=mes).order_by('date')
+    if shed == None:
+        qs = None
+    elif shed == "":
+        qs = None    
+    if is_valid_queryparam(shed):
+        qs = qs.filter(shed=shed).order_by('date')
+
+    if is_valid_queryparam(month):
+        if qs != None:
+            mes = parse_date(month) - timedelta(days=27)
+            qs = qs.filter(date__gte=mes).filter(date__lte=month)
+    else:
+        if qs != None:
+            qs = qs.filter(date__gte=mes)
+
+    context = {
+        'queryset' : qs,
+        'querysets' : qss,
+    }    
+    return render(request,"shed/reports/shed_production.html",context)
+
+def ReportsShedRaised(request):
+    shed = request.GET.get('shed')
+    month = request.GET.get('date')
+    mes = timezone.now() - timedelta(days=27)
+    qs = ShedRegister.objects.filter(shed__type="L").order_by('date')
+    qss = Shed.objects.filter(type="L").order_by('name')
+    #if date == None:
+    #    qs = ShedRegister.objects.filter(shed__type="P").filter(date__gte=mes).order_by('date')
+    #elif date == "":
+    #    qs = ShedRegister.objects.filter(shed__type="P").filter(date__gte=mes).order_by('date')
+    if shed == None:
+        qs = None
+    elif shed == "":
+        qs = None    
+    if is_valid_queryparam(shed):
+        qs = qs.filter(shed=shed).order_by('date')
+
+    if is_valid_queryparam(month):
+        if qs != None:
+            mes = parse_date(month) - timedelta(days=27)
+            qs = qs.filter(date__gte=mes).filter(date__lte=month)
+    else:
+        if qs != None:
+            qs = qs.filter(date__gte=mes)
+
+    context = {
+        'queryset' : qs,
+        'querysets' : qss,
+    }    
+    return render(request,"shed/reports/shed_raised.html",context)

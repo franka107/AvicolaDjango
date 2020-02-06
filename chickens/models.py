@@ -1,5 +1,5 @@
 from django.db import models
-from sheds.models import Shed
+from sheds.models import Shed, ShedRegister
 from django.utils import timezone
 from datetime import date
 
@@ -24,6 +24,7 @@ class Promotion(models.Model):
     quantity = models.IntegerField()
     
     entry_date = models.DateField()
+
     chicken_type = models.CharField(
         max_length =3,
         choices= TYPE_CHOICES
@@ -37,12 +38,8 @@ class Promotion(models.Model):
     updated = models.DateTimeField(
         auto_now=True,
     )
-
-    def _get_final(self):
-        return round((date.today()-self.entry_date).days/7,0)
        
-    week_age = property(_get_final)
-
+    week_age = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Promotion"
