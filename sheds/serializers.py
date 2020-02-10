@@ -65,6 +65,37 @@ class ShedRaisedUpSerializer(serializers.ModelSerializer):
         shed_register = ShedRegister.objects.create(**validated_data)
         return shed_register
 
+    def update(self, instance, validated_data):
+        instance.date = validated_data.get(
+            'date',
+            instance.date
+        )
+        instance.food_income = validated_data.get(
+            'food_income',
+            instance.food_income
+        )
+        instance.food_deposit = validated_data.get(
+            'food_deposit',
+            instance.food_deposit
+        )
+        instance.food_consumption = validated_data.get(
+            'food_consumption',
+            instance.food_consumption
+        )
+        instance.final_deposit = validated_data.get(
+            'final_deposit',
+            instance.final_deposit
+        )
+        instance.chicken_death = validated_data.get(
+            'chicken_death',
+            instance.chicken_death
+        )
+        instance.observation = validated_data.get(
+            'observation',
+            instance.observation
+        )
+        instance.save()
+        return instance
 
 class ShedRaisedDownSerializer(serializers.ModelSerializer):
     shed = ShedSerializer(many = False, read_only= True)
@@ -82,3 +113,4 @@ class ShedRaisedDownSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
         return shed_register
+
