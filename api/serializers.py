@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Shed 
-from .models import ShedRegister 
+from sheds.models import Shed 
+from sheds.models import ShedRegister 
 from farms.models import Farm
 
 class FarmSerializer(serializers.ModelSerializer):
@@ -66,6 +66,10 @@ class ShedRaisedUpSerializer(serializers.ModelSerializer):
         return shed_register
 
     def update(self, instance, validated_data):
+        instance.shed = validated_data.get(
+            'shed',
+            instance.shed
+        )
         instance.date = validated_data.get(
             'date',
             instance.date
@@ -113,4 +117,13 @@ class ShedRaisedDownSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
         return shed_register
+
+
+
+class ProductionShedSerializer(serializers.ModelSerializer):
+    shed = ShedSerializer(many = False, read_only= True)
+
+    class Meta:
+        model = ShedRegister
+        field = ('id','shed','date','package_total','leftover_eggs')
 

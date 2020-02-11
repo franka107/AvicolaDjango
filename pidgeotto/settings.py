@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'farms.apps.FarmsConfig',
     'sheds.apps.ShedsConfig',
+    'api.apps.ApiConfig',
     'chickens.apps.ChickensConfig',
     'rest_framework',
     'corsheaders',

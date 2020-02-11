@@ -22,4 +22,5 @@ urlpatterns = [
     path('shed/', include('sheds.urls')),
     path('chicken/', include('chickens.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('api/', include('api.urls')),
 ]

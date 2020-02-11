@@ -9,25 +9,10 @@ from sheds.views import ShedProductionUpListado, ShedProductionUpDetalle, ShedPr
 from sheds.views import ShedProductionDownListado,ShedProductionDownDetalle,ShedProductionDownCrear,ShedProductionDownActualizar,ShedProductionDownEliminar
 from sheds.views import ShedRaisedUpListado,ShedRaisedUpDetalle,ShedRaisedUpCrear,ShedRaisedUpActualizar,ShedRaisedUpEliminar
 from sheds.views import ShedRaisedDownListado,ShedRaisedDownDetalle,ShedRaisedDownCrear,ShedRaisedDownActualizar,ShedRaisedDownEliminar
-router = routers.DefaultRouter()
-router.register(r'sheds', views.ShedViewSet)
-router.register(r'productionup', views.ShedProductionUpViewSet)
-router.register(r'productiondown', views.ShedProductionDownViewSet)
-router.register(r'raisedup', views.ShedRaisedUpViewSet)
-router.register(r'raiseddown', views.ShedRaisedDownViewSet)
 
 
 
 urlpatterns = [
-
-
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
-
-
-    path('api/', include(router.urls)),
-
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
 
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
 

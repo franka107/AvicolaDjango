@@ -39,7 +39,7 @@ class Promotion(models.Model):
         auto_now=True,
     )
        
-    week_age = models.IntegerField(default=0)
+    week_age = models.IntegerField(default=1)
 
     class Meta:
         verbose_name = "Promotion"

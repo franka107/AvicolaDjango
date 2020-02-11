@@ -39,16 +39,21 @@
       <th>Ingreso</th>
       <th>Saldo</th>
       <th>Consumo</th>
-      <th>Saldo Final</th>
+      <th>S.Final</th>
+      <th>T.Dia</th>
       <th>Muertes</th>
-      <th>Total Paquetes</th>
-      <th>Total Unidades</th>
-      <th>Tipo de Comida</th>
-      <th>Precio de Alimento</th>
-      <th>Porcentaje de Postura</th>
-      <th>Conversion</th>
-      <th>Peso de Gallina</th>
-      <th>Peso de huevo</th>
+      <th>T.Fin.Dia</th>
+      <th>TxP</th>
+      <th>TxU</th>
+      <th>H.B</th>
+      <th>H.S</th>
+      <th>H.R</th>
+      <th>Tip.Comida</th>
+      <th>$.Alimento</th>
+      <th>%Post</th>
+      <th>Conver</th>
+      <th>Peso.G</th>
+      <th>Peso.H</th>
       <th>Acciones</th>
     </tr>
   </thead>
@@ -63,8 +68,13 @@
       <td>{{ shedregister.food_deposit }}</td>
       <td>{{ shedregister.food_consumption }}</td>
       <td>{{ shedregister.final_deposit }}</td>
+      <td>{{ shedregister.chicken_initial }}</td>
       <td>{{ shedregister.chicken_death }}</td>
+      <td>{{ shedregister.chicken_income }}</td>
       <td>{{ shedregister.package_total }}</td>
+      <td>{{ shedregister.egg_white }}</td>
+      <td>{{ shedregister.egg_dirty }}</td>
+      <td>{{ shedregister.egg_break }}</td>
       <td>{{ shedregister.leftover_eggs }}</td>
       <td>{{ shedregister.food_type }}</td>
       <td>{{ shedregister.food_price }}</td>

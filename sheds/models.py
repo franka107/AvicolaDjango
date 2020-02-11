@@ -2,7 +2,6 @@ from django.db import models
 from farms.models import Farm 
 from django.db.models.signals import post_save,pre_save
 from django.dispatch import receiver
-# Create your models here.
 
 class Shed(models.Model):
     TYPE_CHOICES =[
@@ -10,36 +9,49 @@ class Shed(models.Model):
         ('L', 'Levante')
     ]
 
+    # granja a al que pertence
     farm = models.ForeignKey(
         Farm,
         on_delete=models.CASCADE
     ) 
+
+    # tipo de galpon
     type = models.CharField(
         max_length=2,
         choices= TYPE_CHOICES
     )
+
+    # nombre de galpon
     name = models.CharField(
         max_length=50,
         unique=True)
+    
+    # estado de galpon
     is_active = models.BooleanField(
         default=True,
-    ) 
+    )
+
+    # datos adicionales(se autogeneran)
     created = models.DateTimeField(
         auto_now_add=True,
     )
+
+    # datos adicionales(se autogeneran)
     updated = models.DateTimeField(
         auto_now=True,
     )
     
-
+    # clase meta
     class Meta:
         verbose_name = "Shed"
         verbose_name_plural = "Sheds"
         ordering = ('-type','farm')
 
+    # funcion str
     def __str__(self):
         return str(self.name)
 
+    # funcion get absolute url
     def get_absolute_url(self):
         return reverse("Shed_detail", kwargs={"pk": self.pk})
 
@@ -48,60 +60,117 @@ class ShedRegister(models.Model):
         ('G', 'Granos'),
         ('M', 'Maiz')
     ]
+
+    # galpon al que pertenece
     shed = models.ForeignKey(
         Shed,
         on_delete=models.CASCADE
     )
-    #Edad de Aves
+    # edad de Aves
     age_chicken = models.IntegerField(default=0)
 
-    #Fecha del registro
+    # fecha del registro
     date = models.DateField()
 
-    #Ingreso de comida
+    # ingreso de comida
     food_income = models.IntegerField(default=0)
 
-    #Saldo de comida
+    # saldo de comida
     food_deposit = models.IntegerField(default=0)
 
-    #Consumo de comida
+    # consumo de comida
     food_consumption = models.IntegerField(default=0)
     
-    #Saldo final
+    # saldo final
     final_deposit = models.IntegerField(default=0)
+    
+    # total de pollos(final del dia)
+    chicken_initial =  models.IntegerField(default=0,null=True)
 
-    #muerte de pollos
+    # muerte de pollos
     chicken_death = models.IntegerField(default=0)
 
-    #total de pollos
-    #chicken_income =  models.IntegerField(default=0,null=True)
+    # total de pollos(final del dia)
+    chicken_income =  models.IntegerField(default=0,null=True)
     
-    #Observacion(opcional)
+    # observacion(opcional)
     observation =  models.TextField(blank=True)
     
-    #total de paquetes ( solo en produccion )
+    # total de paquetes ( solo en produccion )
     package_total = models.IntegerField(default=0)
 
-    #huevos sobrantes (solo produccion)
+    # huevos sobrantes (solo produccion)
     leftover_eggs = models.IntegerField(default=0)
 
-    #tipo de comida
+    # huevos blancos (x unidades solo produccion)
+    egg_white = models.IntegerField(default=0)
+    
+    # --porcentaje de muertes 
+    def get_pck_w(self):    
+        return self.egg_white // 180
+    egg_white_p = property(get_pck_w)
+
+    # --porcentaje de muertes
+    def get_un_w(self):
+        return self.egg_white % 180
+    egg_white_u = property(get_un_w)
+
+    # huevos rotos (x unidades solo produccion)
+    egg_break = models.IntegerField(default=0)
+    
+    # --porcentaje de muertes 
+    def get_pck_b(self):    
+        return self.egg_break // 180
+    egg_break_p = property(get_pck_b)
+
+    # --porcentaje de muertes
+    def get_un_b(self):
+        return self.egg_break % 180
+    egg_break_u = property(get_un_b)
+
+    # huevos sucios (solo produccion)
+    egg_dirty = models.IntegerField(default=0)
+
+    # --porcentaje de muertes 
+    def get_pck_d(self):    
+        return self.egg_dirty // 180
+    egg_dirty_p = property(get_pck_d)
+
+    # --porcentaje de muertes
+    def get_un_d(self):
+        return self.egg_dirty % 180
+    egg_dirty_u = property(get_un_d)
+
+    # tipo de comida
     food_type = models.CharField(max_length=1, choices=FOOD_CHOICES, blank=True)
 
-    #precio del alimento
+    # precio del alimento
     food_price = models.DecimalField(max_digits=10, decimal_places=2,default=0)
 
-    #porcentaje de postura
+    # porcentaje de postura
     posture_percentaje =  models.DecimalField(max_digits=5, decimal_places=2,default=0)
 
-    #conversion
+    # conversion
     convertion = models.DecimalField(max_digits=5, decimal_places=2,default=0)
 
-    #peso de gallina
+    # peso de gallina
     chicken_weight = models.DecimalField(max_digits=5, decimal_places=2,default=0)
 
-    #peso huevos
+    # peso huevos
     egg_weight = models.DecimalField(max_digits=5, decimal_places=2,default=0)
+
+    # consumo de aves por dia    
+    def get_consume(self):  
+        return self.food_consumption / self.chicken_income
+    consume = property(get_consume)  
+
+    # porcentaje de muertes
+    def get_death(self):
+        if self.chicken_death != 0:
+            return 100 - ((self.chicken_income * 100)/self.chicken_initial)
+        else:
+            return 0
+    pocent_death = property(get_death)
 
 #@receiver(post_save, sender=ShedRegister, dispatch_uid="update")
 #def update(sender, instance, raw, created,**kwargs):
@@ -109,11 +178,11 @@ class ShedRegister(models.Model):
 #       instance.shed.promotion.quantity -= instance.chicken_death
 #       instance.shed.promotion.save()
 
-@receiver(post_save, sender=ShedRegister, dispatch_uid="update")
-def update(sender, instance, created,**kwargs):
-    if created:
-       instance.age_chicken = instance.shed.promotion.week_age
-       instance.save()
+#@receiver(post_save, sender=ShedRegister, dispatch_uid="update")
+#def update(sender, instance, created,**kwargs):
+#    if created:
+#      instance.age_chicken = instance.shed.promotion.week_age
+#       instance.save()
 
 
 
