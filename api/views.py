@@ -33,11 +33,11 @@ class ShedRaisedDownViewSet(viewsets.ModelViewSet):
 
 class ProductionUpViewSet(viewsets.ModelViewSet):
     queryset = ShedRegister.objects.filter(date__gte = timezone.now()- timedelta(days=7) ).filter(date__lte = timezone.now()).filter(shed__type="P").filter(shed__farm__name="Arriba")
-    serializer_class = ShedRaisedDownSerializer
+    serializer_class = ProductionShedSerializer
     http_method_names = ['get']
 
 
 class ProductionDownViewSet(viewsets.ModelViewSet):
     queryset = ShedRegister.objects.filter(date__gte = timezone.now()- timedelta(days=7) ).filter(date__lte = timezone.now()).filter(shed__type="P").filter(shed__farm__name="Abajo")
-    serializer_class = ShedRaisedDownSerializer
+    serializer_class = ProductionShedSerializer
     http_method_names = ['get']
