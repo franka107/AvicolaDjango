@@ -122,8 +122,7 @@ class ShedRaisedDownSerializer(serializers.ModelSerializer):
 
 class ProductionShedSerializer(serializers.ModelSerializer):
     shed = ShedSerializer(many = False, read_only= True)
-
     class Meta:
         model = ShedRegister
-        field = ('id','shed','date','package_total','leftover_eggs')
+        fields = ('id','shed','date','package_total','leftover_eggs')
 
