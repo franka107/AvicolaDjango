@@ -186,9 +186,9 @@ def update_data(sender, instance, created,**kwargs):
         instance.shed.promotion.save()
     else:
         instance.chicken_income = instance.chicken_initial - instance.chicken_death
-        instance.save(update_fields=['chicken_income'])
+        instance.save()
         instance.shed.promotion.quantity = instance.chicken_initial - instance.chicken_death
-        instance.shed.promotion.save(update_fields=['quantity'])
+        instance.shed.promotion.save()
     
 
 

@@ -372,7 +372,7 @@ def ReportsShedProduction(request):
     shed = request.GET.get('shed')
     month = request.GET.get('date')
     mes = timezone.now() - timedelta(days=27)
-    qs = ShedRegister.objects.filter(shed__type="P").order_by('date')
+    qs = ShedRegister.objects.filter(shed__type="P").order_by('name')
     qss = Shed.objects.filter(type="P").order_by('name')
     #if date == None:
     #    qs = ShedRegister.objects.filter(shed__type="P").filter(date__gte=mes).order_by('date')

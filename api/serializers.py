@@ -86,7 +86,6 @@ class ShedRaisedDownSerializer(serializers.ModelSerializer):
 
 
 class FilteredListSerializer(serializers.ListSerializer):
-
     def to_representation(self, data):
         data = data.filter(date__gte = timezone.now()-timedelta(days=6)).filter(date__lte = timezone.now()).order_by('date')
         return super(FilteredListSerializer, self).to_representation(data)
