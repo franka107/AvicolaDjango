@@ -180,15 +180,15 @@ class ShedProductionDownActualizar(LoginRequiredMixin,SuccessMessageMixin, Updat
     model = ShedRegister
     form = ShedRegister
     form_class = ProductionForm
-    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' 
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "P"
                 kwargs['farm'] = "Abajo"            
                 return kwargs
-    # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductiondown') 
+     
  
 class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 

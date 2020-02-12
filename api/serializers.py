@@ -2,6 +2,8 @@ from rest_framework import serializers
 from sheds.models import Shed 
 from sheds.models import ShedRegister 
 from farms.models import Farm
+from django.utils import timezone
+from datetime import datetime, date, time, timedelta
 
 class FarmSerializer(serializers.ModelSerializer):
     class Meta:
@@ -65,42 +67,6 @@ class ShedRaisedUpSerializer(serializers.ModelSerializer):
         shed_register = ShedRegister.objects.create(**validated_data)
         return shed_register
 
-    def update(self, instance, validated_data):
-        instance.shed = validated_data.get(
-            'shed',
-            instance.shed
-        )
-        instance.date = validated_data.get(
-            'date',
-            instance.date
-        )
-        instance.food_income = validated_data.get(
-            'food_income',
-            instance.food_income
-        )
-        instance.food_deposit = validated_data.get(
-            'food_deposit',
-            instance.food_deposit
-        )
-        instance.food_consumption = validated_data.get(
-            'food_consumption',
-            instance.food_consumption
-        )
-        instance.final_deposit = validated_data.get(
-            'final_deposit',
-            instance.final_deposit
-        )
-        instance.chicken_death = validated_data.get(
-            'chicken_death',
-            instance.chicken_death
-        )
-        instance.observation = validated_data.get(
-            'observation',
-            instance.observation
-        )
-        instance.save()
-        return instance
-
 class ShedRaisedDownSerializer(serializers.ModelSerializer):
     shed = ShedSerializer(many = False, read_only= True)
     
@@ -119,10 +85,27 @@ class ShedRaisedDownSerializer(serializers.ModelSerializer):
         return shed_register
 
 
+class FilteredListSerializer(serializers.ListSerializer):
 
-class ProductionShedSerializer(serializers.ModelSerializer):
-    shed = ShedSerializer(many = False, read_only= True)
+    def to_representation(self, data):
+        data = data.filter(date__gte = timezone.now()-timedelta(days=6)).filter(date__lte = timezone.now()).order_by('date')
+        return super(FilteredListSerializer, self).to_representation(data)
+
+class ShedProductionSerializer(serializers.ModelSerializer):
     class Meta:
+        list_serializer_class = FilteredListSerializer
         model = ShedRegister
-        fields = ('id','shed','date','package_total','leftover_eggs')
+        fields = ('date','package_total','leftover_eggs')
+        
+class ProductionShedSerializer(serializers.ModelSerializer):
+    shedregister = ShedProductionSerializer(many=True, read_only=True)
+    class Meta:
+        model = Shed
+        fields = ('name','shedregister')
+
+#class ProductionShedSerializer(serializers.ModelSerializer):
+#    shed = ShedSerializer(many = False, read_only= True)
+#    class Meta:
+#        model = ShedRegister
+#       fields = ('id','shed','date','package_total','leftover_eggs')
 

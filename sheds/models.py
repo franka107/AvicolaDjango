@@ -64,6 +64,7 @@ class ShedRegister(models.Model):
     # galpon al que pertenece
     shed = models.ForeignKey(
         Shed,
+        related_name='shedregister',
         on_delete=models.CASCADE
     )
     # edad de Aves
@@ -172,17 +173,23 @@ class ShedRegister(models.Model):
             return 0
     pocent_death = property(get_death)
 
-#@receiver(post_save, sender=ShedRegister, dispatch_uid="update")
-#def update(sender, instance, raw, created,**kwargs):
-#    if created:
-#       instance.shed.promotion.quantity -= instance.chicken_death
-#       instance.shed.promotion.save()
-
-#@receiver(post_save, sender=ShedRegister, dispatch_uid="update")
-#def update(sender, instance, created,**kwargs):
-#    if created:
-#      instance.age_chicken = instance.shed.promotion.week_age
-#       instance.save()
+@receiver(post_save, sender=ShedRegister)
+def update_data(sender, instance, created,**kwargs):
+    if created:
+        instance.chicken_initial = instance.shed.promotion.quantity
+        instance.save()
+        instance.age_chicken = instance.shed.promotion.week_age
+        instance.save()
+        instance.chicken_income = instance.shed.promotion.quantity - instance.chicken_death
+        instance.save()
+        instance.shed.promotion.quantity = instance.shed.promotion.quantity - instance.chicken_death
+        instance.shed.promotion.save()
+    else:
+        instance.chicken_income = instance.chicken_initial - instance.chicken_death
+        instance.save(update_fields=['chicken_income'])
+        instance.shed.promotion.quantity = instance.chicken_initial - instance.chicken_death
+        instance.shed.promotion.save(update_fields=['quantity'])
+    
 
 
 
