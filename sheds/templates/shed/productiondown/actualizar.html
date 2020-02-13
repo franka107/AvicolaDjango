@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-header">
       <h3>
-        Nuevo Dato de Regitro
+        Edicion de Regitro
       </h3>
     </div>
     <div class="card-body row">
@@ -37,7 +37,7 @@
           <div class="card-body">
             <div class="form-group">
               <label for="is_active" class="txt_negrita">Saldo Aves Dia</label><br>
-              <input type="number" value="{{ object.chicken_initial }}" name="chicken_initial">  
+              {{ form.chicken_initial }} 
             </div>
             <div class="form-group">
               <label for="is_active" class="txt_negrita">Muertes</label><br>
@@ -140,7 +140,7 @@
     </div>
     <div class="card-footer text-muted d-flex justify-content-end">
       <button type="submit" class="btn btn-primary mr-2"><span class="fa fa-check mr-2"></span>Aceptar</button>
-  <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
+      <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
     </div>
   </div> 
   

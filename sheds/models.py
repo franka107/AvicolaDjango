@@ -86,7 +86,7 @@ class ShedRegister(models.Model):
     final_deposit = models.IntegerField(default=0)
     
     # total de pollos(final del dia)
-    chicken_initial =  models.IntegerField(default=0,null=True)
+    chicken_initial =  models.IntegerField(default=0)
 
     # muerte de pollos
     chicken_death = models.IntegerField(default=0)

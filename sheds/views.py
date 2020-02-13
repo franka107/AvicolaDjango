@@ -28,7 +28,6 @@ class ProductionForm(forms.ModelForm):
         type = kwargs.pop('type', None)        
         super().__init__(*args, **kwargs)
         self.fields['shed'].queryset = self.fields['shed'].queryset.filter(type=type).filter(farm__name=farm)
-        #self.fields['age_chicken'].disabled = True
 
 
 class RaisedForm(forms.ModelForm):
@@ -55,32 +54,28 @@ class ShedCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = Shed
     form = Shed
     fields = "__all__" 
-    success_message = 'Galpon Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Galpon Creado Correctamente !' 
  
-    # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shed') # Redireccionamos a la vista principal 'leer' 
- 
+        return reverse('leer_shed')
 class ShedActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = Shed
     form = Shed
     fields = "__all__"  
-    success_message = 'Galpon Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Galpon Actualizado Correctamente !' 
  
-    # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shed') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shed') 
  
 class ShedEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = Shed 
     form = Shed
     fields = "__all__"     
  
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Postre Eliminado Correctamente !' 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shed') # Redireccionamos a la vista principal 'leer'
+        return reverse('leer_shed') 
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # CRUD Produccion Granja Arriba
@@ -106,42 +101,38 @@ class ShedProductionUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = ShedRegister
     form = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba")
     form_class = ProductionForm
-    success_message = 'Registro Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Registro Creado Correctamente !'  
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['farm'] = "Arriba"
         kwargs['type'] = "P"
         return kwargs
-    # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductionup')  
  
 class ShedProductionUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
     form = ShedRegister
     form_class = ProductionForm
-    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['farm'] = "Arriba"
         kwargs['type'] = "P"
         return kwargs
-    # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductionup') 
  
 class ShedProductionUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
     form = ShedRegister
     fields = "__all__"     
  
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Postre Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Postre Eliminado Correctamente !' 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shedproductionup') # Redireccionamos a la vista principal 'leer'
-
+        return reverse('leer_shedproductionup')
 #-----------------------------------------------------------------------------------------------------------------------#
 # CRUD Produccion Granja Abajo
 
@@ -172,9 +163,8 @@ class ShedProductionDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView
             kwargs['type'] = "P"
             kwargs['farm'] = "Abajo"            
             return kwargs
-    # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedproductiondown') 
  
 class ShedProductionDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
@@ -195,11 +185,10 @@ class ShedProductionDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteV
     form = ShedRegister
     fields = "__all__"     
  
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Registro Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Registro Eliminado Correctamente !' 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shedproductiondown') # Redireccionamos a la vista principal 'leer'
+        return reverse('leer_shedproductiondown')
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # CRUD Levante Granja Arriba
@@ -225,40 +214,37 @@ class ShedRaisedUpCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Registro Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Registro Creado Correctamente !'
+   
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
                 kwargs['farm'] = "Arriba"            
                 return kwargs
-    # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer' 
- 
+        return reverse('leer_shedraisedup') 
 class ShedRaisedUpActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !' 
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
                 kwargs['farm'] = "Arriba"            
                 return kwargs
-    # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedraisedup') 
  
 class ShedRaisedUpEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
     model = ShedRegister 
     form = ShedRegister
     fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
  
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Registro Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Registro Eliminado Correctamente !' 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shedraisedup') # Redireccionamos a la vista principal 'leer'        
+        return reverse('leer_shedraisedup')         
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # CRUD Levante Granja Abajo

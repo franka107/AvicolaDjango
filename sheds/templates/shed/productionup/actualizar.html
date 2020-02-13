@@ -3,69 +3,145 @@
 {% load static %}  
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <!-- {{ form.as_p }} -->
-  <div class="form-group">
-    <label for="farm" class="txt_negrita">Galpon</label>
-    {{ form.shed }} 
+  <div class="card">
+    <div class="card-header">
+      <h3>
+        Edicion de Regitro
+      </h3>
+    </div>
+    <div class="card-body row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Datos Principales
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="farm" class="txt_negrita">Galpon</label><br>
+              {{ form.shed }} 
+            </div>
+            <div class="form-group">
+              <label style="margin: .4rem 0;" for="start" class="txt_negrita">Fecha</label><br>
+              <input style="margin: .4rem 0;" type="date" id="start" name="date" value="{{ object.date|date:'Y-m-d' }}">
+            </div>
+            <div class="form-group">
+              <label style="margin: .4rem 0;" for="start" class="txt_negrita">Edad de Ave</label><br>
+              {{ form.age_chicken }} 
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            Datos de Mortalidad
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Saldo Aves Dia</label><br>
+              {{ form.chicken_initial }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Muertes</label><br>
+              {{ form.chicken_death }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Saldo Aves Final</label><br>
+              {{ form.chicken_income }} 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Datos alimenticios
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="name" class="txt_negrita">Ingreso Comida</label><br>
+              {{ form.food_income }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Saldo Inicial de Comida</label><br>
+              {{ form.food_deposit }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Consumo</label><br>
+              {{ form.food_consumption }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Saldo Final de Comida</label><br>
+              {{ form.final_deposit }} 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Datos de Produccion
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Total Paquetes</label><br>
+              {{ form.package_total }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Total Unidades</label><br>
+              {{ form.leftover_eggs }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Huevo Blanco x unidad</label><br>
+              {{ form.egg_white }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Huevo Sucio x unidad</label><br>
+              {{ form.egg_dirty }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Heuvo Roto x unidad</label><br>
+              {{ form.egg_break }} 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Datos de Produccion
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Tipo de Comida</label><br>
+              {{ form.food_type }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Precio de Alimento</label><br>
+              {{ form.food_price }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Porcentaje de Postura</label><br>
+              {{ form.posture_percentaje }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Conversion</label><br>
+              {{ form.convertion }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Peso de Gallina</label><br>
+              {{ form.chicken_weight }} 
+            </div>
+            <div class="form-group">
+              <label for="is_active" class="txt_negrita">Peso de huevo</label><br>
+              {{ form.egg_weight }} 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary mr-2"><span class="fa fa-check mr-2"></span>Aceptar</button>
+      <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="type" class="txt_negrita">Fecha</label>
-    <input style="margin: .4rem 0;" type="date" id="start" name="date" value="{{ object.date|date:'Y-m-d' }}">
-  </div>
-  <div class="form-group">
-    <label for="name" class="txt_negrita">Ingreso</label>
-    {{ form.food_income }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Saldo</label>
-    {{ form.food_deposit }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Consumo</label>
-    {{ form.food_consumption }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Saldo Final</label>
-    {{ form.final_deposit }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Muertes</label>
-    {{ form.chicken_death }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Total Paquetes</label>
-    {{ form.package_total }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Total Unidades</label>
-    {{ form.leftover_eggs }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Tipo de Comida</label>
-    {{ form.food_type }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Precio de Alimento</label>
-    {{ form.food_price }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Porcentaje de Postura</label>
-    {{ form.posture_percentaje }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Conversion</label>
-    {{ form.convertion }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Peso de Gallina</label>
-    {{ form.chicken_weight }} 
-  </div>
-  <div class="form-group">
-    <label for="is_active" class="txt_negrita">Peso de huevo</label>
-    {{ form.egg_weight }} 
-  </div>
-  <button type="submit" class="btn btn-primary"><span class="fa fa-check mr-2"></span>Aceptar</button>
-  <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
- 
 </form>
 {% endblock %}  
