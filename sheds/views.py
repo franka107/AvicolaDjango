@@ -329,9 +329,8 @@ def is_valid_queryparam(param):
 
 def ReportsProductions(request):
     min_date = request.GET.get('min_date')
-    max_date = request.GET.get('max_date')
-    hoy = date.today()  # Asigna fecha actual
-    qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").order_by('shed')
+    semana = timezone.now() - timedelta(days=7)
+    qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
     dia1 = None  
     dia2 = None
     dia3 = None
@@ -340,20 +339,18 @@ def ReportsProductions(request):
     dia6 = None
     dia7 = None
     
-    if min_date == None:
-        qs = None
-    elif min_date == "":
-        qs = None
+    if min_date == "":
+        qs = qs.filter(date__gte=semana).filter(date__lte=timezone.now())
 
     if is_valid_queryparam(min_date):
         dia1 = parse_date(min_date) 
-        dia2 = dia1 + timedelta(days=1)
-        dia3 = dia2 + timedelta(days=1)
-        dia4 = dia3 + timedelta(days=1)
-        dia5 = dia4 + timedelta(days=1)
-        dia6 = dia5 + timedelta(days=1)
-        dia7 = dia6 + timedelta(days=1)
-        qs = qs.filter(date__gte=min_date).filter(date__lte=dia7)
+        dia2 = dia1 - timedelta(days=1)
+        dia3 = dia2 - timedelta(days=1)
+        dia4 = dia3 - timedelta(days=1)
+        dia5 = dia4 - timedelta(days=1)
+        dia6 = dia5 - timedelta(days=1)
+        dia7 = dia6 - timedelta(days=1)
+        qs = qs.filter(date__gte=dia7).filter(date__lte=timezone.now())
 
     context = {
         'queryset' : qs,

@@ -45,20 +45,13 @@
       <th>T.Fin.Dia</th>
       <th>TxP</th>
       <th>TxU</th>
-      <th>H.B</th>
-      <th>H.S</th>
-      <th>H.R</th>
       <th>Tip.Comida</th>
       <th>$.Alimento</th>
       <th>%Post</th>
-      <th>Conver</th>
-      <th>Peso.G</th>
-      <th>Peso.H</th>
       <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
-  <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'postres' y los listamos -->
   {% for shedregister in filter.qs %}
     <tr>
       <td>{{ shedregister.shed }}</td>
@@ -72,30 +65,22 @@
       <td>{{ shedregister.chicken_death }}</td>
       <td>{{ shedregister.chicken_income }}</td>
       <td>{{ shedregister.package_total }}</td>
-      <td>{{ shedregister.egg_white }}</td>
-      <td>{{ shedregister.egg_dirty }}</td>
-      <td>{{ shedregister.egg_break }}</td>
       <td>{{ shedregister.leftover_eggs }}</td>
       <td>{{ shedregister.food_type }}</td>
       <td>{{ shedregister.food_price }}</td>
       <td>{{ shedregister.posture_percentaje }}</td>
-      <td>{{ shedregister.convertion }}</td>
-      <td>{{ shedregister.chicken_weight }}</td>
-      <td>{{ shedregister.egg_weight }}</td>
-      <td>        
-        <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o postre desde la misma tabla HTML -->                        
-        <form method="POST" action="eliminar/{{shedregister.id}}">
+      <td>  
+        <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
+        <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>      
+        <!--<form method="POST" action="eliminar/{{shedregister.id}}">
           {% csrf_token %}
           <div class="btn-group">
- 
-            <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-            <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
-            <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>
-            <!--<button class="btn btn-danger" onclick="return eliminar();" type="submit">
+            
+            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
               Eliminar
-            </button>-->
+            </button>
           </div>
-        </form>
+        </form>-->
  
       </td>
     </tr>

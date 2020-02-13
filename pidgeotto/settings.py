@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'chickens.apps.ChickensConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'django_filters',
 ]
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

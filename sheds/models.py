@@ -176,6 +176,7 @@ class ShedRegister(models.Model):
 @receiver(post_save, sender=ShedRegister)
 def update_data(sender, instance, created,**kwargs):
     if created:
+        post_save.disconnect(update_data, sender=ShedRegister)
         instance.chicken_initial = instance.shed.promotion.quantity
         instance.save()
         instance.age_chicken = instance.shed.promotion.week_age
@@ -184,11 +185,15 @@ def update_data(sender, instance, created,**kwargs):
         instance.save()
         instance.shed.promotion.quantity = instance.shed.promotion.quantity - instance.chicken_death
         instance.shed.promotion.save()
-    else:
-        instance.chicken_income = instance.chicken_initial - instance.chicken_death
-        instance.save()
+        post_save.connect(update_data, sender=ShedRegister)        
+    if created == False:
+        post_save.disconnect(update_data, sender=ShedRegister)
         instance.shed.promotion.quantity = instance.chicken_initial - instance.chicken_death
         instance.shed.promotion.save()
+        instance.chicken_income = instance.chicken_initial - instance.chicken_death
+        instance.save()
+        post_save.connect(update_data, sender=ShedRegister)        
+
     
 
 
