@@ -133,13 +133,6 @@
 <!---------------------------------------------- Tabla Impresa -------------------------------------------------->
 <div class="table-responsive">
   <table class="table table-hover table-bordered text-center" id="ProdutionUpPrint" style="display: none;">
-    {% if messages %}
-      <ul class="messages list-group mb-3">
-    {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
-    {% endfor %}
-      </ul>
-    {% endif %} 
     <thead>
       <tr>
         <th>Galpon</th>

@@ -76,13 +76,13 @@ class ShedRegister(models.Model):
     # ingreso de comida
     food_income = models.IntegerField(default=0)
 
-    # saldo de comida
+    # saldo de comida(Dia Anterior)
     food_deposit = models.IntegerField(default=0)
 
     # consumo de comida
     food_consumption = models.IntegerField(default=0)
     
-    # saldo final
+    # saldo final(Final Dia)
     final_deposit = models.IntegerField(default=0)
     
     # total de pollos(final del dia)
@@ -179,18 +179,29 @@ def update_data(sender, instance, created,**kwargs):
         post_save.disconnect(update_data, sender=ShedRegister)
         instance.chicken_initial = instance.shed.promotion.quantity
         instance.save()
+        instance.food_deposit = instance.shed.promotion.food
+        instance.save()
         instance.age_chicken = instance.shed.promotion.week_age
+        instance.save()
+        instance.final_deposit = (instance.food_income + instance.shed.promotion.food) - instance.food_consumption
         instance.save()
         instance.chicken_income = instance.shed.promotion.quantity - instance.chicken_death
         instance.save()
+        instance.shed.promotion.food = (instance.food_income + instance.shed.promotion.food) - instance.food_consumption
+        instance.shed.promotion.save()
         instance.shed.promotion.quantity = instance.shed.promotion.quantity - instance.chicken_death
         instance.shed.promotion.save()
+
         post_save.connect(update_data, sender=ShedRegister)        
     if created == False:
         post_save.disconnect(update_data, sender=ShedRegister)
         instance.shed.promotion.quantity = instance.chicken_initial - instance.chicken_death
         instance.shed.promotion.save()
+        instance.shed.promotion.food = (instance.food_income + instance.food_deposit) - instance.food_consumption
+        instance.shed.promotion.save()
         instance.chicken_income = instance.chicken_initial - instance.chicken_death
+        instance.save()
+        instance.final_deposit = (instance.food_income + instance.food_deposit) - instance.food_consumption
         instance.save()
         post_save.connect(update_data, sender=ShedRegister)        
 

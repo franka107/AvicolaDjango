@@ -41,6 +41,8 @@ class Promotion(models.Model):
        
     week_age = models.IntegerField(default=1)
 
+    food = models.IntegerField(default=0)
+
     class Meta:
         verbose_name = "Promotion"
         verbose_name_plural = "Promotions"
