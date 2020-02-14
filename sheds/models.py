@@ -162,13 +162,13 @@ class ShedRegister(models.Model):
 
     # consumo de aves por dia    
     def get_consume(self):  
-        return self.food_consumption / self.chicken_income
+        return round(self.food_consumption / self.chicken_income , 3)
     consume = property(get_consume)  
 
     # porcentaje de muertes
     def get_death(self):
-        if self.chicken_death != 0:
-            return 100 - ((self.chicken_income * 100)/self.chicken_initial)
+        if self.chicken_death != 0 and self.chicken_initial !=0 :
+            return round(100 - ((self.chicken_income * 100)/self.chicken_initial) , 3)
         else:
             return 0
     pocent_death = property(get_death)

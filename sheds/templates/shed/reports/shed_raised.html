@@ -20,7 +20,7 @@
 <div class="align-self-end justify-content-end mb-3 mr-3">  
     <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
 </div>    
-<table class="table table-striped table-hover text-center"  id="">
+<table class="table table-hover text-center"  id="">
     {% regroup queryset by age_chicken as shed_items %}    
         <thead>
             <tr>
@@ -63,8 +63,11 @@
                     <td>{{ shedregister.food_deposit }}</td>
                     <td>{{ shedregister.food_consumption }}</td>
                     <td style="border-right: 4px solid black;">{{ shedregister.final_deposit }}</td>
+                    <td>{{ shedregister.consume }}</td>
+                    <td style="border-right: 4px solid black;"></td>
                     <td>{{ shedregister.chicken_death }}</td>
-                    <td style="border-right: 4px solid black;">{{ shedregister.chicken_income }}</td> 
+                    <td>{{ shedregister.chicken_income }}</td>
+                    <td style="border-right: 4px solid black;"></td> 
                     <td style="border-right: 4px solid black;">{{ shedregister.posture_percentaje }}</td>
                     <td style="border-right: 4px solid black;">{{ shedregister.chicken_weight }}</td>
                     <td style="border-right: 4px solid black;">{{ shedregister.observation }}</td>
@@ -80,63 +83,54 @@
         </tfoot> 
 </table>
 
-<table class="table table-striped table-hover text-center" style="border: 4px solid black;display: none;" id="tabla">
+<table class="table table-hover text-center" style="border: 4px solid black;" id="tabla">
     {% regroup queryset by age_chicken as shed_items %}    
     <thead>
         <tr>
             <th colspan="1" style="border: 4px solid black;">Edad</th>
             <th colspan="3" style="border: 4px solid black;">Fecha</th>
             <th colspan="4" style="border: 4px solid black;">Alimento</th>
-            <th colspan="2" style="border: 4px solid black;">Mortalidad</th>
-            <th colspan="7" style="border: 4px solid black;">Datos de Produccion</th>
-            <th style="border: 4px solid black;">Peso</th>
-            <th style="width: 30%;border: 4px solid black;">Observaciones</th>
+            <th colspan="8" style="border: 4px solid black;">Datos Levante</th>
         </tr>
-        <tr>
-          <th style="border: 4px solid black;">SEM</th>
-          <th>D</th>
-          <th>M</th>  
-          <th style="border-right: 4px solid black;">A</th>  
-          <th>Ingreso</th>
-          <th>Saldo</th>
-          <th>Consumo</th>
-          <th style="border-right: 4px solid black;">S.Final</th>
-          <th>Muertes</th>
-          <th style="border-right: 4px solid black;">Total</th>
-          <th>TP</th>
-          <th>TU</th>
-          <th>RS</th>
-          <th>BL</th>
-          <th>RT</th>
-          <th>SC</th>
-          <th style="border-right: 4px solid black;">%</th><!--Porcentaje de Postura-->
-          <th style="border-right: 4px solid black;"></th><!--Peso-->
-          <th style="border-right: 4px solid black;"></th><!--Observaciones-->
+        <tr style="border: 4px solid black;">
+            <th style="border: 4px solid black;">SEM</th>
+            <th>D</th>
+            <th>M</th>  
+            <th style="border-right: 4px solid black;">A</th>  
+            <th>INGRESO</th>
+            <th>SALDO</th>
+            <th>CONSUMO</th>
+            <th style="border-right: 4px solid black;">S.FINAL</th>
+            <th>gr/ave/dia</th>
+            <th style="border-right: 4px solid black;">STANDAR</th>
+            <th>MOTALIDAD</th>
+            <th>SALDO/AVES</th>
+            <th style="border-right: 4px solid black;">%</th><!--Peso-->
+            <th>PESO</th>
+            <th style="border-right: 4px solid black;">STANDAR</th><!--Porcentaje de Postura-->
+            <th style="border-right: 4px solid black;width: 50%;">Observaciones</th><!--Observaciones-->   
         </tr>
-      </thead>
+    </thead>
       {% for shed in shed_items %}
       <tbody style="border: 4px solid black;">  
               {% for shedregister in shed.list %}
               <tr> 
-                  <th style="border: 4px solid black;">{{ shed.grouper }}</th>
-                  <td>{{ shedregister.date|date:'d' }}</td>   
-                  <td>{{ shedregister.date|date:'m' }}</td>   
-                  <td style="border-right: 4px solid black;">{{ shedregister.date|date:'Y' }}</td>   
-                  <td>{{ shedregister.food_income }}</td>
-                  <td>{{ shedregister.food_deposit }}</td>
-                  <td>{{ shedregister.food_consumption }}</td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.final_deposit }}</td>
-                  <td>{{ shedregister.chicken_death }}</td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.chicken_income }}</td> 
-                  <td>{{ shedregister.package_total }}</td>
-                  <td>{{ shedregister.leftover_eggs }}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.posture_percentaje }}</td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.chicken_weight }}</td>
-                  <td>{{ shedregister.observation }}</td>
+                    <th style="border: 4px solid black;">{{ shed.grouper }}</th>
+                    <td>{{ shedregister.date|date:'d' }}</td>   
+                    <td>{{ shedregister.date|date:'m' }}</td>   
+                    <td style="border-right: 4px solid black;">{{ shedregister.date|date:'Y' }}</td>   
+                    <td>{{ shedregister.food_income }}</td>
+                    <td>{{ shedregister.food_deposit }}</td>
+                    <td>{{ shedregister.food_consumption }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.final_deposit }}</td>
+                    <td>{{ shedregister.consume }}</td>
+                    <td style="border-right: 4px solid black;"></td>
+                    <td>{{ shedregister.chicken_death }}</td>
+                    <td>{{ shedregister.chicken_income }}</td>
+                    <td style="border-right: 4px solid black;"></td> 
+                    <td style="border-right: 4px solid black;">{{ shedregister.posture_percentaje }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.chicken_weight }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.observation }}</td>
               </tr>
               {% endfor %}
       </tbody>

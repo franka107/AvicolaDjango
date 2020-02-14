@@ -20,7 +20,7 @@
 <div class="align-self-end justify-content-end mb-3 mr-3">  
     <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
 </div>    
-<table class="table table-striped table-hover text-center"  id="">
+<table class="table table-hover text-center" >
     {% regroup queryset by age_chicken as shed_items %}    
         <thead>
             <tr>
@@ -42,7 +42,7 @@
             <th>Consumo</th>
             <th style="border-right: 4px solid black;">S.Final</th>
             <th>Muertes</th>
-            <th>%</th>
+            <th>%</th><!--Porcentaje de muerte-->
             <th style="border-right: 4px solid black;">Total</th>
             <th>TxP</th>
             <th>TxU</th>
@@ -71,7 +71,7 @@
                     <td>{{ shedregister.food_consumption }}</td>
                     <td style="border-right: 4px solid black;">{{ shedregister.final_deposit }}</td>
                     <td>{{ shedregister.chicken_death }}</td>
-                    <td></td>
+                    <td>{{ shedregister.pocent_death}}</td>
                     <td style="border-right: 4px solid black;">{{ shedregister.chicken_income }}</td> 
                     <td>{{ shedregister.package_total }}</td>
                     <td>{{ shedregister.leftover_eggs }}</td>
@@ -92,7 +92,7 @@
             </tr>
         </tfoot> 
 </table>
-<table class="table table-striped table-hover text-center" style="border: 4px solid black;display: none;" id="tabla">
+<table class="table table-hover text-center" style="border: 4px solid black;" id="tabla">
     {% regroup queryset by age_chicken as shed_items %}    
     <thead>
         <tr>
@@ -100,55 +100,56 @@
             <th colspan="3" style="border: 4px solid black;">Fecha</th>
             <th colspan="4" style="border: 4px solid black;">Alimento</th>
             <th colspan="3" style="border: 4px solid black;">Mortalidad</th>
-            <th colspan="7" style="border: 4px solid black;">Datos de Produccion</th>
+            <th colspan="6" style="border: 4px solid black;">Datos de Produccion</th>
             <th style="border: 4px solid black;">Peso</th>
-            <th style="width: 30%;border: 4px solid black;">Observaciones</th>
+            <th style="border: 4px solid black;">Observaciones</th>
         </tr>
-        <tr>
-          <th style="border: 4px solid black;">SEM</th>
-          <th>D</th>
-          <th>M</th>  
-          <th style="border-right: 4px solid black;">A</th>  
-          <th>Ingreso</th>
-          <th>Saldo</th>
-          <th>Consumo</th>
-          <th style="border-right: 4px solid black;">S.Final</th>
-          <th>Muertes</th>
-          <th>%</th>
-          <th style="border-right: 4px solid black;">Total</th>
-          <th>TP</th>
-          <th>TU</th>
-          <th>BL</th>
-          <th>RT</th>
-          <th>SC</th>
-          <th style="border-right: 4px solid black;">%</th><!--Porcentaje de Postura-->
-          <th style="border-right: 4px solid black;"></th><!--Peso-->
-          <th style="border-right: 4px solid black;"></th><!--Observaciones-->
+        <tr style="border: 4px solid black;">
+        <th style="border: 4px solid black;">SEM</th>
+        <th>D</th>
+        <th>M</th>  
+        <th style="border-right: 4px solid black;">A</th>  
+        <th>Ingreso</th>
+        <th>Saldo</th>
+        <th>Consumo</th>
+        <th style="border-right: 4px solid black;">S.Final</th>
+        <th>Muertes</th>
+        <th>%</th><!--Porcentaje de muerte-->
+        <th style="border-right: 4px solid black;">Total</th>
+        <th>TxP</th>
+        <th>TxU</th>
+        <th>BLxU</th>
+        <th>RTxU</th>
+        <th>SCxU</th>
+        <th style="border-right: 4px solid black;">%</th>
+        <th style="border-right: 4px solid black;"></th>
+        <th style="border-right: 4px solid black;"></th>
+
         </tr>
-      </thead>
+    </thead>
       {% for shed in shed_items %}
       <tbody style="border: 4px solid black;">  
               {% for shedregister in shed.list %}
               <tr> 
                   <th style="border: 4px solid black;">{{ shed.grouper }}</th>
                   <td>{{ shedregister.date|date:'d' }}</td>   
-                  <td>{{ shedregister.date|date:'m' }}</td>   
-                  <td style="border-right: 4px solid black;">{{ shedregister.date|date:'Y' }}</td>   
-                  <td>{{ shedregister.food_income }}</td>
-                  <td>{{ shedregister.food_deposit }}</td>
-                  <td>{{ shedregister.food_consumption }}</td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.final_deposit }}</td>
-                  <td>{{ shedregister.chicken_death }}</td>
-                  <td></td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.chicken_income }}</td> 
-                  <td>{{ shedregister.package_total }}</td>
-                  <td>{{ shedregister.leftover_eggs }}</td>
-                  <td>{{ shedregister.egg_white }}</td>
-                  <td>{{ shedregister.egg_break }}</td>
-                  <td>{{ shedregister.egg_dirty }} </td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.posture_percentaje }}</td>
-                  <td style="border-right: 4px solid black;">{{ shedregister.chicken_weight }}</td>
-                  <td>{{ shedregister.observation }}</td>
+                    <td>{{ shedregister.date|date:'m' }}</td>   
+                    <td style="border-right: 4px solid black;">{{ shedregister.date|date:'Y' }}</td>   
+                    <td>{{ shedregister.food_income }}</td>
+                    <td>{{ shedregister.food_deposit }}</td>
+                    <td>{{ shedregister.food_consumption }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.final_deposit }}</td>
+                    <td>{{ shedregister.chicken_death }}</td>
+                    <td>{{ shedregister.pocent_death}}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.chicken_income }}</td> 
+                    <td>{{ shedregister.package_total }}</td>
+                    <td>{{ shedregister.leftover_eggs }}</td>
+                    <td>{{ shedregister.egg_white_p }} - {{ shedregister.egg_white_u }} </td>
+                    <td>{{ shedregister.egg_break }} - {{ shedregister.egg_break_u }} </td>
+                    <td>{{ shedregister.egg_dirty }} - {{ shedregister.egg_dirty_u }} </td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.posture_percentaje }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.chicken_weight }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.observation }}</td>
               </tr>
               {% endfor %}
       </tbody>

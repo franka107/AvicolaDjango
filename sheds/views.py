@@ -358,7 +358,7 @@ def ReportsShedProduction(request):
             qs = qs.filter(date__gte=mes).filter(date__lte=month)
     else:
         if qs != None:
-            qs = qs.filter(date__gte=mes)
+            qs = qs.filter(date__gte=mes).filter(date__lte=timezone.now())
 
     context = {
         'queryset' : qs,
