@@ -1,41 +1,37 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}
-
-  <h1>
-    <span class="fa fa-home mr-2"></span>Galpones de Postura
-  </h1>
-  
-  <h4>
-    <span class="fa fa-arrow-up mr-2"></span>Granja de Arriba
-  </h4>
-  
-  <div class="row">
-
-    <div class="col-7">
-      <div class="btn_crear mb-3">
-        <a href="crear"  class="btn btn-primary"><span class="fa fa-file-text mr-2"></span> Nuevo Registro</a>
-      </div>
+<h1><span class="fa fa-home mr-2"></span>Galpones de Postura</h1>
+<h4><span class="fa fa-arrow-up mr-2"></span>Granja de Arriba</h4>
+<div class="row">
+  <div class="col-7">
+    <div class="btn_crear mb-3">
+      <a href="crear"  class="btn btn-primary"><span class="fa fa-file-text mr-2"></span> Nuevo Registro</a>
     </div>
-
-    <div class="col-5 d-flex justify-content-end">
-      <form method="GET" class="mb-3" >
-        <label style="margin: .4rem 0;" for="start" class="txt_negrita">Fecha</label>
-        <input style="margin: .4rem 0;" type="date" id="start" name="date">
-        <button type="submit" class="btn btn-primary"><span class="fa fa-filter mr-2"></span>Filtrar</button>        
-      </form>
-    </div>
-
   </div>
+  <div class="col-5 d-flex justify-content-end">
+    <form method="GET" class="mb-3" >
+      <label style="margin: .4rem 0;" for="start" class="txt_negrita">Fecha</label>
+      <input style="margin: .4rem 0;" type="date" id="start" name="date">
+      <button type="submit" class="btn btn-primary"><span class="fa fa-filter mr-2"></span>Filtrar</button>        
+    </form>
+  </div>
+</div>
+<div class="align-self-end justify-content-end mb-3 mr-3">  
+  <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
+</div> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-  <table class="table table-striped table-hover text-center">
+<!---------------------------------------------- Tabla Mostrada -------------------------------------------------->
+<div class="table-responsive">
+  <table class="table table-hover table-bordered text-center" id="ProdutionUp">
     {% if messages %}
       <ul class="messages list-group mb-3">
-        {% for message in messages %}
+    {% for message in messages %}
         <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
-        {% endfor %}
+    {% endfor %}
       </ul>
-    {% endif %}  
+    {% endif %} 
     <thead>
       <tr>
         <th>Galpon</th>
@@ -50,10 +46,10 @@
         <th>T.Fin.Dia</th>
         <th>TxP</th>
         <th>TxU</th>
-        <th>Tip.Comida</th>
-        <th>$.Alimento</th>
+        <th>Tip.Food</th>
+        <th>$.Food</th>
         <th>%Post</th>
-        <th>Acciones</th>
+        <th style="width: 15%;">Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -74,27 +70,57 @@
         <td>{{ shedregister.food_type }}</td>
         <td>{{ shedregister.food_price }}</td>
         <td>{{ shedregister.posture_percentaje }}</td>
-        <td>         
-          <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o postre desde la misma tabla HTML -->                        
-          <form method="POST" action="eliminar/{{shedregister.id}}">
+        <td>
+          <div class="btn-group">
+            <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
+            <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>        
+          </div>  
+         <!--<form method="POST" action="eliminar/{{shedregister.id}}">
             {% csrf_token %}
             <div class="btn-group">
-  
-              <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-              <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
-              <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>
-              <!--<button class="btn btn-danger" onclick="return eliminar();" type="submit">
+              
+              <button class="btn btn-danger" onclick="return eliminar();" type="submit">
                 Eliminar
-              </button>-->
+              </button>
             </div>
-          </form>
-  
+          </form>-->
+   
         </td>
       </tr>
     {% endfor %}
-  
     </tbody>
+    <tfoot>
+      <tr>
+          <th>Total</th>
+          <th colspan="7"></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th colspan="4"></th>
+      </tr>
+  </tfoot>
   </table>
+</div>
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+    var total_col0 = 0;
+    var total_col1 = 0;
+    var total_col2 = 0;
+    $('#ProdutionUp tbody').find('tr').each(function (i, el) {
+              
+          total_col0 += parseFloat($(this).find('td').eq(8).text());     
+          total_col1 += parseFloat($(this).find('td').eq(10).text());
+          total_col2 += parseFloat($(this).find('td').eq(11).text());
+                  
+      });
+      $('#ProdutionUp tfoot tr th').eq(2).text(total_col0);
+      $('#ProdutionUp tfoot tr th').eq(4).text(total_col1+Math.trunc(total_col2/180));
+      $('#ProdutionUp tfoot tr th').eq(5).text(total_col2%180);
+
+  });
+</script>
 <script type="text/javascript">
   function eliminar() {
     var x = confirm("Eliminar Producto ?");
@@ -103,6 +129,109 @@
     else
       return false;
   }
+</script>
+<!---------------------------------------------- Tabla Impresa -------------------------------------------------->
+<div class="table-responsive">
+  <table class="table table-hover table-bordered text-center" id="ProdutionUpPrint" style="display: none;">
+    {% if messages %}
+      <ul class="messages list-group mb-3">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+    {% endfor %}
+      </ul>
+    {% endif %} 
+    <thead>
+      <tr>
+        <th>Galpon</th>
+        <th style="width: 6%;">Fecha</th>
+        <th>Edad</th>
+        <th>Ingreso</th>
+        <th>Saldo</th>
+        <th>Consumo</th>
+        <th>S.Final</th>
+        <th>T.Dia</th>
+        <th>Muertes</th>
+        <th>T.Fin.Dia</th>
+        <th>TxP</th>
+        <th>TxU</th>
+        <th>Tip.Food</th>
+        <th>$.Food</th>
+        <th>%Post</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for shedregister in filter.qs %}
+      <tr>
+        <td>{{ shedregister.shed }}</td>
+        <td>{{ shedregister.date|date:'d-m-y' }}</td>
+        <td>{{ shedregister.age_chicken }}</td>
+        <td>{{ shedregister.food_income }}</td>
+        <td>{{ shedregister.food_deposit }}</td>
+        <td>{{ shedregister.food_consumption }}</td>
+        <td>{{ shedregister.final_deposit }}</td>
+        <td>{{ shedregister.chicken_initial }}</td>
+        <td>{{ shedregister.chicken_death }}</td>
+        <td>{{ shedregister.chicken_income }}</td>
+        <td>{{ shedregister.package_total }}</td>
+        <td>{{ shedregister.leftover_eggs }}</td>
+        <td>{{ shedregister.food_type }}</td>
+        <td>{{ shedregister.food_price }}</td>
+        <td>{{ shedregister.posture_percentaje }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+          <th>Total</th>
+          <th colspan="7"></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th colspan="3"></th>
+      </tr>
+  </tfoot>
+  </table>
+</div>
+
+<!---------------------------------------------- Script para totales -------------------------------------------------->
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+    var total_col0 = 0;
+    var total_col1 = 0;
+    var total_col2 = 0;
+    $('#ProdutionUpPrint tbody').find('tr').each(function (i, el) {
+              
+          total_col0 += parseFloat($(this).find('td').eq(8).text());     
+          total_col1 += parseFloat($(this).find('td').eq(10).text());
+          total_col2 += parseFloat($(this).find('td').eq(11).text());
+                  
+      });
+      $('#ProdutionUpPrint tfoot tr th').eq(2).text(total_col0);
+      $('#ProdutionUpPrint tfoot tr th').eq(4).text(total_col1+Math.trunc(total_col2/180));
+      $('#ProdutionUpPrint tfoot tr th').eq(5).text(total_col2%180);
+
+  });
+</script>
+
+<!---------------------------------------------- Script para reporte -------------------------------------------------->
+<script>
+  const $btnExportar = document.querySelector("#btnExportar"),
+      $ProdutionUpPrint = document.querySelector("#ProdutionUpPrint");
+
+  $btnExportar.addEventListener("click", function() {
+      let tableExport = new TableExport(
+          $ProdutionUpPrint, {
+              exportButtons: false, // No queremos botones
+              filename: "Mi tabla de Excel", //Nombre del archivo de Excel
+              sheetname: "Reporte de Galpon", //Título de la hoja
+          }
+      );
+      let datos = tableExport.getExportData();
+      let preferenciasDocumento = datos.ProdutionUpPrint.xlsx;
+      tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+  });
 </script>
 {% endblock %} 
  

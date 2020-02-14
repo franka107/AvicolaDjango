@@ -21,80 +21,221 @@
       </form>
     </div>
   </div>
-  
-  
-<table class="table table-striped table-hover text-center">
-  {% if messages %}
-    <ul class="messages list-group mb-3">
+  <div class="align-self-end justify-content-end mb-3 mr-3">  
+    <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
+  </div> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!---------------------------------------------- Tabla Mostrada -------------------------------------------------->
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered text-center" id="ProdutionDown">
+      {% if messages %}
+        <ul class="messages list-group mb-3">
       {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+          <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
       {% endfor %}
-    </ul>
-  {% endif %} 
-  <thead>
-    <tr>
-      <th>Galpon</th>
-      <th style="width: 6%;">Fecha</th>
-      <th>Edad</th>
-      <th>Ingreso</th>
-      <th>Saldo</th>
-      <th>Consumo</th>
-      <th>S.Final</th>
-      <th>T.Dia</th>
-      <th>Muertes</th>
-      <th>T.Fin.Dia</th>
-      <th>TxP</th>
-      <th>TxU</th>
-      <th>Tip.Comida</th>
-      <th>$.Alimento</th>
-      <th>%Post</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for shedregister in filter.qs %}
-    <tr>
-      <td>{{ shedregister.shed }}</td>
-      <td>{{ shedregister.date|date:'d-m-y' }}</td>
-      <td>{{ shedregister.age_chicken }}</td>
-      <td>{{ shedregister.food_income }}</td>
-      <td>{{ shedregister.food_deposit }}</td>
-      <td>{{ shedregister.food_consumption }}</td>
-      <td>{{ shedregister.final_deposit }}</td>
-      <td>{{ shedregister.chicken_initial }}</td>
-      <td>{{ shedregister.chicken_death }}</td>
-      <td>{{ shedregister.chicken_income }}</td>
-      <td>{{ shedregister.package_total }}</td>
-      <td>{{ shedregister.leftover_eggs }}</td>
-      <td>{{ shedregister.food_type }}</td>
-      <td>{{ shedregister.food_price }}</td>
-      <td>{{ shedregister.posture_percentaje }}</td>
-      <td>  
-        <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
-        <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>      
-        <!--<form method="POST" action="eliminar/{{shedregister.id}}">
-          {% csrf_token %}
-          <div class="btn-group">
-            
-            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
-              Eliminar
-            </button>
-          </div>
-        </form>-->
- 
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-<script type="text/javascript">
-  function eliminar() {
-    var x = confirm("Eliminar Producto ?");
-    if (x)
-      return true;
-    else
-      return false;
-  }
-</script>
+        </ul>
+      {% endif %} 
+      <thead>
+        <tr>
+          <th>Galpon</th>
+          <th style="width: 6%;">Fecha</th>
+          <th>Edad</th>
+          <th>Ingreso</th>
+          <th>Saldo</th>
+          <th>Consumo</th>
+          <th>S.Final</th>
+          <th>T.Dia</th>
+          <th>Muertes</th>
+          <th>T.Fin.Dia</th>
+          <th>TxP</th>
+          <th>TxU</th>
+          <th>Tip.Food</th>
+          <th>$.Food</th>
+          <th>%Post</th>
+          <th style="width: 15%;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for shedregister in filter.qs %}
+        <tr>
+          <td>{{ shedregister.shed }}</td>
+          <td>{{ shedregister.date|date:'d-m-y' }}</td>
+          <td>{{ shedregister.age_chicken }}</td>
+          <td>{{ shedregister.food_income }}</td>
+          <td>{{ shedregister.food_deposit }}</td>
+          <td>{{ shedregister.food_consumption }}</td>
+          <td>{{ shedregister.final_deposit }}</td>
+          <td>{{ shedregister.chicken_initial }}</td>
+          <td>{{ shedregister.chicken_death }}</td>
+          <td>{{ shedregister.chicken_income }}</td>
+          <td>{{ shedregister.package_total }}</td>
+          <td>{{ shedregister.leftover_eggs }}</td>
+          <td>{{ shedregister.food_type }}</td>
+          <td>{{ shedregister.food_price }}</td>
+          <td>{{ shedregister.posture_percentaje }}</td>
+          <td>
+            <div class="btn-group">
+              <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
+              <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>        
+            </div>  
+           <!--<form method="POST" action="eliminar/{{shedregister.id}}">
+              {% csrf_token %}
+              <div class="btn-group">
+                
+                <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                  Eliminar
+                </button>
+              </div>
+            </form>-->
+     
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+            <th>Total</th>
+            <th colspan="7"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th colspan="4"></th>
+        </tr>
+    </tfoot>
+    </table>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function()
+    {
+      var total_col0 = 0;
+      var total_col1 = 0;
+      var total_col2 = 0;
+      $('#ProdutionDown tbody').find('tr').each(function (i, el) {
+                
+            total_col0 += parseFloat($(this).find('td').eq(8).text());     
+            total_col1 += parseFloat($(this).find('td').eq(10).text());
+            total_col2 += parseFloat($(this).find('td').eq(11).text());
+                    
+        });
+        $('#ProdutionDown tfoot tr th').eq(2).text(total_col0);
+        $('#ProdutionDown tfoot tr th').eq(4).text(total_col1+Math.trunc(total_col2/180));
+        $('#ProdutionDown tfoot tr th').eq(5).text(total_col2%180);
+  
+    });
+  </script>
+  <script type="text/javascript">
+    function eliminar() {
+      var x = confirm("Eliminar Producto ?");
+      if (x)
+        return true;
+      else
+        return false;
+    }
+  </script>
+  <!---------------------------------------------- Tabla Impresa -------------------------------------------------->
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered text-center" id="ProdutionDownPrint" style="display: none;">
+      {% if messages %}
+        <ul class="messages list-group mb-3">
+      {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+      {% endfor %}
+        </ul>
+      {% endif %} 
+      <thead>
+        <tr>
+          <th>Galpon</th>
+          <th style="width: 6%;">Fecha</th>
+          <th>Edad</th>
+          <th>Ingreso</th>
+          <th>Saldo</th>
+          <th>Consumo</th>
+          <th>S.Final</th>
+          <th>T.Dia</th>
+          <th>Muertes</th>
+          <th>T.Fin.Dia</th>
+          <th>TxP</th>
+          <th>TxU</th>
+          <th>Tip.Food</th>
+          <th>$.Food</th>
+          <th>%Post</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for shedregister in filter.qs %}
+        <tr>
+          <td>{{ shedregister.shed }}</td>
+          <td>{{ shedregister.date|date:'d-m-y' }}</td>
+          <td>{{ shedregister.age_chicken }}</td>
+          <td>{{ shedregister.food_income }}</td>
+          <td>{{ shedregister.food_deposit }}</td>
+          <td>{{ shedregister.food_consumption }}</td>
+          <td>{{ shedregister.final_deposit }}</td>
+          <td>{{ shedregister.chicken_initial }}</td>
+          <td>{{ shedregister.chicken_death }}</td>
+          <td>{{ shedregister.chicken_income }}</td>
+          <td>{{ shedregister.package_total }}</td>
+          <td>{{ shedregister.leftover_eggs }}</td>
+          <td>{{ shedregister.food_type }}</td>
+          <td>{{ shedregister.food_price }}</td>
+          <td>{{ shedregister.posture_percentaje }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+            <th>Total</th>
+            <th colspan="7"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th colspan="3"></th>
+        </tr>
+    </tfoot>
+    </table>
+  </div>
+  
+  <!---------------------------------------------- Script para totales -------------------------------------------------->
+  <script type="text/javascript">
+    $(document).ready(function()
+    {
+      var total_col0 = 0;
+      var total_col1 = 0;
+      var total_col2 = 0;
+      $('#ProdutionDownPrint tbody').find('tr').each(function (i, el) {
+                
+            total_col0 += parseFloat($(this).find('td').eq(8).text());     
+            total_col1 += parseFloat($(this).find('td').eq(10).text());
+            total_col2 += parseFloat($(this).find('td').eq(11).text());
+                    
+        });
+        $('#ProdutionDownPrint tfoot tr th').eq(2).text(total_col0);
+        $('#ProdutionDownPrint tfoot tr th').eq(4).text(total_col1+Math.trunc(total_col2/180));
+        $('#ProdutionDownPrint tfoot tr th').eq(5).text(total_col2%180);
+  
+    });
+  </script>
+  
+  <!---------------------------------------------- Script para reporte -------------------------------------------------->
+  <script>
+    const $btnExportar = document.querySelector("#btnExportar"),
+        $ProdutionDownPrint = document.querySelector("#ProdutionDownPrint");
+  
+    $btnExportar.addEventListener("click", function() {
+        let tableExport = new TableExport(
+            $ProdutionDownPrint, {
+                exportButtons: false, // No queremos botones
+                filename: "Mi tabla de Excel", //Nombre del archivo de Excel
+                sheetname: "Reporte de Galpon", //Título de la hoja
+            }
+        );
+        let datos = tableExport.getExportData();
+        let preferenciasDocumento = datos.ProdutionDownPrint.xlsx;
+        tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+    });
+  </script>
 {% endblock %} 
  

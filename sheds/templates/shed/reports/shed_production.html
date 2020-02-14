@@ -30,7 +30,7 @@
                 <th colspan="3" style="border: 4px solid black;">Mortalidad</th>
                 <th colspan="6" style="border: 4px solid black;">Datos de Produccion</th>
                 <th style="border: 4px solid black;">Peso</th>
-                <th style="width: 30%;border: 4px solid black;">Observaciones</th>
+                <th style="border: 4px solid black;">Observaciones</th>
             </tr>
             <tr style="border: 4px solid black;">
             <th style="border: 4px solid black;">SEM</th>
@@ -75,12 +75,12 @@
                     <td style="border-right: 4px solid black;">{{ shedregister.chicken_income }}</td> 
                     <td>{{ shedregister.package_total }}</td>
                     <td>{{ shedregister.leftover_eggs }}</td>
-                    <td>{{ shedregister.egg_white }}</td>
-                    <td>{{ shedregister.egg_break }}</td>
-                    <td>{{ shedregister.egg_dirty }} </td>
+                    <td>{{ shedregister.egg_white_p }} - {{ shedregister.egg_white_u }} </td>
+                    <td>{{ shedregister.egg_break }} - {{ shedregister.egg_break_u }} </td>
+                    <td>{{ shedregister.egg_dirty }} - {{ shedregister.egg_dirty_u }} </td>
                     <td style="border-right: 4px solid black;">{{ shedregister.posture_percentaje }}</td>
                     <td style="border-right: 4px solid black;">{{ shedregister.chicken_weight }}</td>
-                    <td>{{ shedregister.observation }}</td>
+                    <td style="border-right: 4px solid black;">{{ shedregister.observation }}</td>
                 </tr>
                 {% endfor %}
         </tbody>
@@ -92,7 +92,6 @@
             </tr>
         </tfoot> 
 </table>
-
 <table class="table table-striped table-hover text-center" style="border: 4px solid black;display: none;" id="tabla">
     {% regroup queryset by age_chicken as shed_items %}    
     <thead>

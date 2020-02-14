@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .filters import ShedRegisterFilter
 from datetime import datetime, date, time, timedelta
 from django.utils.dateparse import parse_date
-
+from django.db.models import Avg, Max, Min, Sum
 #-----------------------------------------------------------------------------------------------------------------------#
 # Filtro de Opciones Views
 
@@ -269,29 +269,27 @@ class ShedRaisedDownCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView):
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Registro Creado Correctamente !' # Mostramos este Mensaje luego de Crear un Postre     
+    success_message = 'Registro Creado Correctamente !'      
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
                 kwargs['farm'] = "Abajo"            
                 return kwargs
-    # Redireccionamos a la página principal luego de crear un registro o postre
     def get_success_url(self):        
-        return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedraiseddown') 
  
 class ShedRaisedDownActualizar(LoginRequiredMixin,SuccessMessageMixin, UpdateView): 
     model = ShedRegister
     form = ShedRegister
     form_class = RaisedForm
-    success_message = 'Registro Actualizado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+    success_message = 'Registro Actualizado Correctamente !'  
     def get_form_kwargs(self):
                 kwargs = super().get_form_kwargs()
                 kwargs['type'] = "L"
                 kwargs['farm'] = "Abajo"            
                 return kwargs
-    # Redireccionamos a la página principal luego de actualizar un registro o postre
     def get_success_url(self):               
-        return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedraiseddown') 
  
 class ShedRaisedDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView): 
 
@@ -299,11 +297,10 @@ class ShedRaisedDownEliminar(LoginRequiredMixin,SuccessMessageMixin, DeleteView)
     form = ShedRegister
     fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
  
-    # Redireccionamos a la página principal luego de eliminar un registro o postre
     def get_success_url(self): 
-        success_message = 'Registro Eliminado Correctamente !' # Mostramos este Mensaje luego de Editar un Postre 
+        success_message = 'Registro Eliminado Correctamente !' 
         messages.success (self.request, (success_message))       
-        return reverse('leer_shedraiseddown') # Redireccionamos a la vista principal 'leer' 
+        return reverse('leer_shedraiseddown')  
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # Funciones
@@ -315,38 +312,25 @@ def is_valid_queryparam(param):
 
 def ReportsProductions(request):
     min_date = request.GET.get('min_date')
-    semana = timezone.now() - timedelta(days=7)
+    semana = timezone.now() - timedelta(days=6)
     qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
-    dia1 = None  
-    dia2 = None
-    dia3 = None
-    dia4 = None
-    dia5 = None
-    dia6 = None
-    dia7 = None
-    
+    data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('date')
+
     if min_date == "":
-        qs = qs.filter(date__gte=semana).filter(date__lte=timezone.now())
+        qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
+        data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('date')
+
 
     if is_valid_queryparam(min_date):
         dia1 = parse_date(min_date) 
-        dia2 = dia1 - timedelta(days=1)
-        dia3 = dia2 - timedelta(days=1)
-        dia4 = dia3 - timedelta(days=1)
-        dia5 = dia4 - timedelta(days=1)
-        dia6 = dia5 - timedelta(days=1)
-        dia7 = dia6 - timedelta(days=1)
-        qs = qs.filter(date__gte=dia7).filter(date__lte=timezone.now())
+        dia7 = dia1 - timedelta(days=6)
+        qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=dia7).filter(date__lte=min_date).order_by('shed')
+        data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=dia7).filter(date__lte=min_date).order_by('date')
+
 
     context = {
         'queryset' : qs,
-        'd1' : dia1,
-        'd2' : dia2,
-        'd3' : dia3,
-        'd4' : dia4,
-        'd5' : dia5,
-        'd6' : dia6,
-        'd7' : dia7,
+        'data_date' : data_date,
         'min_date' : min_date, 
     }    
     return render(request,"shed/reports/productions.html",context)
