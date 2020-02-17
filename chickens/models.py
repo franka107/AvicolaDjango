@@ -23,6 +23,8 @@ class Promotion(models.Model):
     
     quantity = models.IntegerField()
     
+    age_days = models.IntegerField(default=0)
+
     entry_date = models.DateField()
 
     chicken_type = models.CharField(

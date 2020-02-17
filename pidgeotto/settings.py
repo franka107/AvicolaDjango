@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from celery.schedules import crontab
+from datetime import timedelta
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -136,3 +137,13 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CELERY_IMPORTS = ("chickens.tasks",)
+
+
+CELERYBEAT_SCHEDULE = {
+    'asyncAge': {
+        'task': 'chickens.tasks.updateWeekAge',
+        'schedule': crontab(minute=0, hour=0),
+    },
+} 
