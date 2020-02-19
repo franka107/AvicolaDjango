@@ -4,8 +4,9 @@
     <h1 class="">
         Bienvenido <strong>{{ user.get_username }}  </strong> al sistema de adminstracion de Avimar/Avicola
     </h1>
-    {{ user.get_group_permissions }}
     
-</center>
-
+    <br>
+    {% if 'chickens.view_promotion' in user.get_all_permissions %}
+        hola mundo
+    {% endif %}
 {% endblock %}

@@ -177,6 +177,11 @@ class ShedRegister(models.Model):
 def update_data(sender, instance, created,**kwargs):
     if created:
         post_save.disconnect(update_data, sender=ShedRegister)
+        
+        if instance.shed.promotion.quantity == 0:
+            instance.shed.promotion.quantity = instance.shed.promotion.food_income
+            instance.shed.promotion.save()
+
         instance.chicken_initial = instance.shed.promotion.quantity
         instance.save()
         instance.food_deposit = instance.shed.promotion.food
@@ -195,6 +200,11 @@ def update_data(sender, instance, created,**kwargs):
         post_save.connect(update_data, sender=ShedRegister)        
     if created == False:
         post_save.disconnect(update_data, sender=ShedRegister)
+        
+        if instance.shed.promotion.quantity == 0:
+            instance.shed.promotion.quantity = instance.shed.promotion.food_income
+            instance.shed.promotion.save()
+
         instance.shed.promotion.quantity = instance.chicken_initial - instance.chicken_death
         instance.shed.promotion.save()
         instance.shed.promotion.food = (instance.food_income + instance.food_deposit) - instance.food_consumption

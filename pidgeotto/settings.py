@@ -144,6 +144,6 @@ CELERY_IMPORTS = ("chickens.tasks",)
 CELERYBEAT_SCHEDULE = {
     'asyncAge': {
         'task': 'chickens.tasks.updateWeekAge',
-        'schedule': crontab(minute=0, hour=0),
+        'schedule': crontab(minute='*/1'),
     },
 } 
