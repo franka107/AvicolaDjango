@@ -87,7 +87,8 @@ urlpatterns = [
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\
 
 
-    path('report/production/',views.ReportsProductions, name='production'),
+    path('report/upproduction/',views.ReportsUpProductions, name='upproduction'),
+    path('report/downproduction/',views.ReportsDownProductions, name='downproduction'),
     path('report/shedp/',views.ReportsShedProduction, name='shedP'),
     path('report/shedr/',views.ReportsShedRaised, name='shedR'),
 

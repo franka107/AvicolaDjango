@@ -1,9 +1,10 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}  
+{% if 'sheds.change_shedregister' in user.get_all_permissions %}
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <!-- {{ form.as_p }} -->
   <div class="form-group">
     <label for="farm" class="txt_negrita">Galpon</label>
     {{ form.shed }} 
@@ -47,4 +48,6 @@
   <button type="submit" class="btn btn-primary"><span class="fa fa-check mr-2"></span>Aceptar</button>
   <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
 </form>
+
+{% endif %}
 {% endblock %}  

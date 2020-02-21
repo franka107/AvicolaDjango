@@ -1,6 +1,7 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}  
+{% if 'farms.view_farm' in user.get_all_permissions %}
 
 <h4>Detalles</h4>
  
@@ -12,4 +13,5 @@
 <!-- Botón para volver a la vista principal (Home) -->
 <a href="../"  class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
 
+{% endif %}
 {% endblock %}

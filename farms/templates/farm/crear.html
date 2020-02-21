@@ -1,6 +1,8 @@
 {% extends 'farm/base.html' %}
 {% block content %}
-{% load static %}  
+{% load static %} 
+{% if 'farms.add_farm' in user.get_all_permissions %}
+
 <form method="post" enctype="multipart/form-data">
   
   {% csrf_token %}
@@ -18,4 +20,5 @@
   <a href="./"  class="btn btn-danger"><span class="fa fa-times mr-2"></span>Cancelar</a>
  
 </form>
+{% endif %}
 {% endblock %}   

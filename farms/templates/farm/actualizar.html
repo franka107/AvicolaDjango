@@ -1,10 +1,11 @@
 {% extends 'farm/base.html' %}
 {% block content %}
-{% load static %}  
+{% load static %}
+{% if 'farms.change_farm' in user.get_all_permissions %}
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   
-  <!-- {{ form.as_p }} -->
   <div class="form-group">
     <label for="name" class="txt_negrita">Nombre</label>
     {{ form.name }} <!-- Usamos la librería 'widget_tweaks' para crear esta caja de texto -->
@@ -17,4 +18,6 @@
   <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
  
 </form>
+
+{% endif %}
 {% endblock %}  

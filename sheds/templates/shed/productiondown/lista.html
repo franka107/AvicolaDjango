@@ -1,6 +1,8 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}
+{% if 'sheds.view_shedregister' in user.get_all_permissions %}
+
   <h1>
     <span class="fa fa-home mr-2"></span>Galpones de Postura
   </h1>
@@ -9,9 +11,11 @@
   </h4>
   <div class="row">
     <div class="col-7">
+      {% if 'sheds.add_shedregister' in user.get_all_permissions %}
       <div class="btn_crear mb-3">
         <a href="crear"  class="btn btn-primary"><span class="fa fa-file-text mr-2"></span>Crear Nuevo Registro</a>
       </div>
+      {% endif %}
     </div>
     <div class="col-5 d-flex justify-content-end">
       <form method="GET" class="mb-3" >
@@ -21,9 +25,11 @@
       </form>
     </div>
   </div>
+  {% if 'sheds.add_shedregister' in user.get_all_permissions %}
   <div class="align-self-end justify-content-end mb-3 mr-3">  
     <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
   </div> 
+  {% endif %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <!---------------------------------------------- Tabla Mostrada -------------------------------------------------->
@@ -75,19 +81,22 @@
           <td>{{ shedregister.food_price }}</td>
           <td>{{ shedregister.posture_percentaje }}</td>
           <td>
-            <div class="btn-group">
-              <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
-              <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>        
-            </div>  
-           <!--<form method="POST" action="eliminar/{{shedregister.id}}">
+             
+           <form method="POST" action="eliminar/{{shedregister.id}}">
               {% csrf_token %}
               <div class="btn-group">
-                
+                <a href="detalle/{{shedregister.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
+                {% if 'sheds.change_shedregister' in user.get_all_permissions %}
+                <a href="editar/{{shedregister.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square mr-2"></span>Editar </a>         
+                {% endif %}
+                {% if 'sheds.delete_shedregister' in user.get_all_permissions %}
                 <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                  <span class="fa fa-trash mr-2"></span>
                   Eliminar
                 </button>
+                {% endif %}
               </div>
-            </form>-->
+            </form>
      
           </td>
         </tr>
@@ -230,5 +239,6 @@
         tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
     });
   </script>
+{% endif %}  
 {% endblock %} 
  

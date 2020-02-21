@@ -60,6 +60,8 @@ class ShedRegister(models.Model):
         ('G', 'Granos'),
         ('M', 'Maiz')
     ]
+    
+    
 
     # galpon al que pertenece
     shed = models.ForeignKey(
@@ -172,6 +174,9 @@ class ShedRegister(models.Model):
         else:
             return 0
     pocent_death = property(get_death)
+
+    def __str__(self):
+        return str(self.date)
 
 @receiver(post_save, sender=ShedRegister)
 def update_data(sender, instance, created,**kwargs):

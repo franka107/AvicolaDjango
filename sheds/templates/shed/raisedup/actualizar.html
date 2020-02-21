@@ -1,16 +1,17 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}  
+{% if 'sheds.change_shedregister' in user.get_all_permissions %}
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <!-- {{ form.as_p }} -->
   <div class="form-group">
     <label for="farm" class="txt_negrita">Galpon</label>
     {{ form.shed }} 
   </div>
   <div class="form-group">
     <label for="type" class="txt_negrita">Fecha</label>
-    <input style="margin: .4rem 0;" type="date" id="start" name="date" value="{{ object.date|date:'Y-m-d' }}">   
+    <input style="margin: .4rem 0;" type="date" id="start" name="date" value="{{ object.date|date:'Y-m-d' }}">
   </div>
   <div class="form-group">
     <label for="name" class="txt_negrita">Ingreso</label>
@@ -46,6 +47,7 @@
   </div>
   <button type="submit" class="btn btn-primary"><span class="fa fa-check mr-2"></span>Aceptar</button>
   <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
- 
 </form>
+
+{% endif %}
 {% endblock %}  

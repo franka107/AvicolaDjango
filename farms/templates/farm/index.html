@@ -6,6 +6,7 @@
     </h1>
     
     <br>
+    {{ user.get_all_permissions }}
     {% if 'chickens.view_promotion' in user.get_all_permissions %}
         hola mundo
     {% endif %}

@@ -1,6 +1,7 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}  
+{% if 'sheds.view_shedregister' in user.get_all_permissions %}
 
 <h4>Detalles</h4>
  
@@ -22,4 +23,5 @@
 
 <a href="../"  class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
 
+{% endif %}
 {% endblock %}

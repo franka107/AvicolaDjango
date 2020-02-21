@@ -2,10 +2,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Sidebar 05</title>
+  	<title>Pagina de Adminstracion de Avimar</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	<link rel="icon" href="{% static 'images/ico.jpg' %}">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{% static 'csscrud/css/style.css' %}">
@@ -52,7 +52,10 @@
 					<a href="{% url 'leer_shedraiseddown' %}"><span class="fa fa-arrow-circle-down mr-3"></span> Levante Abajo </a>
 				</li>
 				<li>
-					<a href="{% url 'production' %}"><span class="fa fa-newspaper-o mr-3"></span> Reporte Produccion </a>
+					<a href="{% url 'upproduction' %}"><span class="fa fa-newspaper-o mr-3"></span> Reporte Produccion Arriba</a>
+				</li>
+				<li>
+					<a href="{% url 'downproduction' %}"><span class="fa fa-newspaper-o mr-3"></span> Reporte Produccion Abajo </a>
 				</li>
 				<li>
 					<a href="{% url 'shedP' %}"><span class="fa fa-newspaper-o mr-3"></span> Reporte Galpones Postura </a>

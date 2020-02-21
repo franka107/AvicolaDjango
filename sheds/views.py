@@ -310,16 +310,17 @@ def is_valid_queryparam(param):
 
 # Reportes
 
-def ReportsProductions(request):
+def ReportsDownProductions(request):
     min_date = request.GET.get('min_date')
     semana = timezone.now() - timedelta(days=6)
     qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
     data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('date')
 
+    sheds_and_items = {}
+
     if min_date == "":
         qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
         data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('date')
-
 
     if is_valid_queryparam(min_date):
         dia1 = parse_date(min_date) 
@@ -327,13 +328,44 @@ def ReportsProductions(request):
         qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=dia7).filter(date__lte=min_date).order_by('shed')
         data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Abajo").filter(date__gte=dia7).filter(date__lte=min_date).order_by('date')
 
+    for queryset in qs:
+        current_key = queryset.shed
+        sheds_and_items.setdefault(current_key, []).append(queryset)
 
     context = {
-        'queryset' : qs,
+        'sheds_items' : sheds_and_items,
         'data_date' : data_date,
-        'min_date' : min_date, 
     }    
-    return render(request,"shed/reports/productions.html",context)
+    return render(request,"shed/reports/upproductions.html",context)
+
+def ReportsUpProductions(request):
+    min_date = request.GET.get('min_date')
+    semana = timezone.now() - timedelta(days=6)
+    qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
+    data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('date')
+
+    sheds_and_items = {}
+
+    if min_date == "":
+        qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('shed')
+        data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").filter(date__gte=semana).filter(date__lte=timezone.now()).order_by('date')
+
+    if is_valid_queryparam(min_date):
+        dia1 = parse_date(min_date) 
+        dia7 = dia1 - timedelta(days=6)
+        qs = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").filter(date__gte=dia7).filter(date__lte=min_date).order_by('shed')
+        data_date = ShedRegister.objects.filter(shed__type="P").filter(shed__farm__name="Arriba").filter(date__gte=dia7).filter(date__lte=min_date).order_by('date')
+
+    for queryset in qs:
+        current_key = queryset.shed
+        sheds_and_items.setdefault(current_key, []).append(queryset)
+
+    context = {
+        'sheds_items' : sheds_and_items,
+        'data_date' : data_date,
+    }    
+    return render(request,"shed/reports/downproductions.html",context)    
+    
 
 def ReportsShedProduction(request):
     shed = request.GET.get('shed')

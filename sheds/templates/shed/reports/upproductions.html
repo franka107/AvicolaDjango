@@ -1,6 +1,8 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}
+{% if 'sheds.view_shedregister' in user.get_all_permissions %}
+
     <div class="row">
         <div class="col">
             <h1>
@@ -10,9 +12,12 @@
                 <span class="fa fa-arrow-down mr-2"></span>Granja de Abajo 
             </h4>
         </div>
+        {% if 'sheds.add_shedregister' in user.get_all_permissions %}
         <div class="align-self-end justify-content-end mb-3 mr-3">  
             <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
         </div>
+        {% endif %}
+
     </div>
     <form method="GET" class="mb-3" >
         <div class="row d-flex justify-content-end">
@@ -28,7 +33,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <div class="row">
         <div class="col-12">
-            {% regroup queryset by shed as shed_items %}
             {% regroup data_date by date as date_items %}        
             <table class="table table-hover text-center" style="border: 4px solid black;" id="tabla">
                 <thead style="border: 1px solid black;">
@@ -49,20 +53,58 @@
                     </tr>
                 
                 </thead>
-                <tbody>
-                    {% for shed in shed_items %}
-                        <tr> 
-                            <td style="border: 1px solid black; border-right: 4px solid black;">{{ shed.grouper }}</td>
-                            {% for shedregister in shed.list|dictsort:"date" %}
-                                {% for dates in date_items %}
-                                    {% if dates.grouper == shedregister.date %}
-                                    {% else %}   
-                                    {% endif %}
-                                {% endfor %}
-                                <td>{{ shedregister.package_total }}</td>
-                                <td style="border-right: 4px solid black;">{{ shedregister.package_total }}</td>
-                            {% endfor %}  
-                        </tr>
+                <tbody> 
+                    {% for shed, item_list in sheds_items.items %}
+                    <tr> 
+                        <td style="border: 1px solid black; border-right: 4px solid black;">{{ shed }} - {{ forloop.counter }}</td>
+                        <script>
+                            var colores = [];
+                            var date = [];
+                            {% for shedregister in item_list|dictsort:"date" %}
+                                colores.push ("{{ shedregister.date}}"); 
+                            {% endfor %}
+
+                            {% for dates in date_items %}
+                                date.push ("{{ dates.grouper}}"); 
+                            {% endfor %}
+                            cont = 0;
+                            boolean = false;
+                            {% for shedregister in item_list|dictsort:"date" %}
+                                for(var i=0;i<1;i++){
+                                    for1 = "{{ forloop.counter }}" 
+                                    sl="{{ item_list|length }}"
+                                    shed_date  = "{{  shedregister.date }}";
+                                    if (sl == date.length){
+                                        document.write("<td>{{  shedregister.package_total }}</td>"  );    
+                                        document.write("<td style='border-right: 4px solid black;'>{{ shedregister.leftover_eggs }}</td>");
+                                    }else if(sl != date.length){
+                                        if (boolean == true){
+                                            document.write("<td>{{ shedregister.package_total }}</td>"  );    
+                                            document.write("<td style='border-right: 4px solid black;'>{{ shedregister.leftover_eggs }}</td>");
+                                        }
+                                        if (boolean == false){
+                                            for(var i=0;i<=date.length-1;i++){
+                                                if(shed_date != date[i]){
+                                                    document.write("<td>---</td>"  );    
+                                                    document.write("<td style='border-right: 4px solid black;'>---</td>");
+                                                }else{
+                                                    document.write("<td>{{  shedregister.package_total }}</td>"  );    
+                                                    document.write("<td style='border-right: 4px solid black;'>{{ shedregister.leftover_eggs }}</td>");
+                                                    boolean = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if(for1 == sl && shed_date!=date[date.length-1]){
+                                            document.write("<td>---</td>"  );    
+                                            document.write("<td style='border-right: 4px solid black;'>---</td>");
+                                        }
+
+                                    }
+                                }
+                            {% endfor %}
+                        </script>      
+                    </tr>
                     {% endfor %}
                 </tbody>
                 <tfoot>
@@ -95,9 +137,7 @@
           var total_col6_2 = 0;
           var total_col7_1 = 0;
           var total_col7_2 = 0;
-          //Recorro todos los tr ubicados en el tbody
           $('#tabla tbody').find('tr').each(function (i, el) {
-                //Voy incrementando las variables segun la fila ( .eq(0) representa la fila 1 )     
                 total_col1_1 += parseFloat($(this).find('td').eq(1).text()); 
                 total_col1_2 += parseFloat($(this).find('td').eq(2).text());
                 total_col2_1 += parseFloat($(this).find('td').eq(3).text());
@@ -113,7 +153,6 @@
                 total_col7_1 += parseFloat($(this).find('td').eq(13).text());
                 total_col7_2 += parseFloat($(this).find('td').eq(14).text());
             });
-            //Muestro el resultado en el th correspondiente a la columna
             $('#tabla tfoot tr th').eq(1).text(total_col1_1+Math.trunc(total_col1_2/180));
             $('#tabla tfoot tr th').eq(2).text(total_col1_2%180);
             $('#tabla tfoot tr th').eq(3).text(total_col2_1+Math.trunc(total_col2_2/180));
@@ -148,5 +187,6 @@
             tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
         });
     </script>
+{% endif %}
 {% endblock %} 
  

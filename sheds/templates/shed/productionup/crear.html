@@ -1,9 +1,12 @@
 {% extends 'farm/base.html' %}
 {% block content %}
-{% load static %}  
+{% load static %}
+{% if 'sheds.add_shedregister' in user.get_all_permissions %}
+
 <form method="post" enctype="multipart/form-data">
   
   {% csrf_token %}
+
   <div class="card">
     <div class="card-header">
       <h3>
@@ -145,4 +148,5 @@
     </div>
   </div> 
 </form>
+{% endif %}
 {% endblock %}   

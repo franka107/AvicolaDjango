@@ -1,6 +1,8 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}
+{% if 'sheds.view_shedregister' in user.get_all_permissions %}
+
 <form method="GET" class="mb-3" >
     Elige un galpon para poder ver sus reporte  
     <select name="shed">
@@ -17,9 +19,11 @@
     </div>
     <button type="submit" class="btn btn-primary"><span class="fa fa-filter mr-2"></span>Filtrar</button>    
 </form>
+{% if 'sheds.add_shedregister' in user.get_all_permissions %}
 <div class="align-self-end justify-content-end mb-3 mr-3">  
     <button class="btn default xlsx" id="btnExportar">Generar Reporte Exel</button>
-</div>    
+</div>
+{% endif %}    
 <table class="table table-hover text-center" >
     {% regroup queryset by age_chicken as shed_items %}    
         <thead>
@@ -174,4 +178,5 @@
     });
 </script>
 
+{% endif %}
 {% endblock %} 

@@ -1,75 +1,77 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}
-<h1><span class="fa fa-hand-lizard-o mr-2"></span>Promocion de Gallinas</h1>
-<div align="left" class="btn_crear mb-3">
-  <a href="crear"  class="btn btn-primary"><span class="fa fa-file-text mr-2"></span>Crear Nueva Promocion</a>
-</div>
-<table class="table table-striped table-hover">
-  {% if messages %}
-    <ul class="messages list-group mb-3">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}  
-  <thead>
-    <tr>
-      <th width="35%">Nombre</th>
-      <th>Galpon</th>
-      <th>Cantidad</th>
-      <th>Edad en Semana</th>
-      <th>Edad en Dias</th>
-      <th>Comida</th>
-      <th>Fecha de entrada</th>
-      <th>Tipo de Gallina</th>
-      <th>Estado</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'postres' y los listamos -->
-  {% for promotion in object_list %}
-    <tr>
-      <td>{{ promotion.name }}</td>
-      <td>{{ promotion.shed }}</td>
-      <td>{{ promotion.quantity }}</td>
-      <td>{{ promotion.week_age }}</td>
-      <td>{{ promotion.age_days }}</td>
-      <td>{{ promotion.food }}</td>
-      <td>{{ promotion.entry_date }}</td>
-      <td>{{ promotion.chicken_type }}</td>
-      <td>{{ promotion.is_active }}</td>
-      <td>        
-        <!-- Usaremos un formulario que realizará la tarea de eliminar un registro o postre desde la misma tabla HTML -->                        
-        <form method="POST" action="eliminar/{{promotion.id}}">
-          {% csrf_token %}
-          <div class="btn-group">
- 
-            <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-            <a href="detalle/{{promotion.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
-            <a href="editar/{{promotion.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square-o mr-2"></span>Editar </a>
-            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
-              <span class="fa fa-trash mr-2"></span>Eliminar
-            </button>
-          </div>
-        </form>
- 
-      </td>
-    </tr>
-  {% endfor %}
- 
-  </tbody>
-</table>
-<script type="text/javascript">
-  function eliminar() {
-    var x = confirm("Eliminar Producto ?");
-    if (x)
-      return true;
-    else
-      return false;
-  }
-</script>
+{% if 'chickens.view_promotion' in user.get_all_permissions %}
+  <h1><span class="fa fa-hand-lizard-o mr-2"></span>Promocion de Gallinas</h1>
+  {% if 'chickens.add_promotion' in user.get_all_permissions %}
+    <div align="left" class="btn_crear mb-3">
+      <a href="crear"  class="btn btn-primary"><span class="fa fa-file-text mr-2"></span>Crear Nueva Promocion</a>
+    </div>
+  {% endif %}
+  <table class="table table-striped table-hover">
+    {% if messages %}
+      <ul class="messages list-group mb-3">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}  
+    <thead>
+      <tr>
+        <th width="35%">Nombre</th>
+        <th>Galpon</th>
+        <th>Cantidad</th>
+        <th>Edad en Semana</th>
+        <th>Edad en Dias</th>
+        <th>Comida</th>
+        <th>Fecha de entrada</th>
+        <th>Tipo de Gallina</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for promotion in object_list %}
+      <tr>
+        <td>{{ promotion.name }}</td>
+        <td>{{ promotion.shed }}</td>
+        <td>{{ promotion.quantity }}</td>
+        <td>{{ promotion.week_age }}</td>
+        <td>{{ promotion.age_days }}</td>
+        <td>{{ promotion.food }}</td>
+        <td>{{ promotion.entry_date }}</td>
+        <td>{{ promotion.chicken_type }}</td>
+        <td>{{ promotion.is_active }}</td>
+        <td>        
+          <form method="POST" action="eliminar/{{promotion.id}}">
+            {% csrf_token %}
+            <div class="btn-group">
+              <a href="detalle/{{promotion.id}}" title="Ver"  class="btn btn-success"><span class="fa fa-eye mr-2"></span>Ver </a>
+              {% if 'chickens.change_promotion' in user.get_all_permissions %}
+                <a href="editar/{{promotion.id}}" title="Editar"  class="btn btn-primary"><span class="fa fa-pencil-square-o mr-2"></span>Editar </a>
+              {% endif %}
+
+              {% if 'chickens.delete_promotion' in user.get_all_permissions %}
+                <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                  <span class="fa fa-trash mr-2"></span>Eliminar
+                </button>
+              {% endif %}
+            </div>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <script type="text/javascript">
+    function eliminar() {
+      var x = confirm("Eliminar Producto ?");
+      if (x)
+        return true;
+      else
+        return false;
+    }
+  </script>
+{% endif %}
 {% endblock %} 
  

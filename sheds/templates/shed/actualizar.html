@@ -1,6 +1,8 @@
 {% extends 'farm/base.html' %}
 {% block content %}
 {% load static %}  
+{% if 'sheds.change_shed' in user.get_all_permissions %}
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% csrf_token %}
@@ -23,6 +25,6 @@
   </div>
   <button type="submit" class="btn btn-primary"><span class="fa fa-check mr-2"></span>Aceptar</button>
   <a href="../" class="btn btn-danger"><span class="fa fa-arrow-left mr-2"></span>Volver</a>
- 
 </form>
+{% endif %}
 {% endblock %}  
