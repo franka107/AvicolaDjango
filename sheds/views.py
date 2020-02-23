@@ -33,7 +33,7 @@ class ProductionForm(forms.ModelForm):
 class RaisedForm(forms.ModelForm):
     class Meta:
         model = ShedRegister
-        fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight')
+        fields = ('shed','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','food_type','food_price','chicken_weight','quantity_chicken','entry_chicken','leave_chicken')
     def __init__(self, *args, **kwargs):
         farm = kwargs.pop('farm', None)
         type = kwargs.pop('type', None)        

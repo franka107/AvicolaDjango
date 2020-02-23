@@ -32,7 +32,7 @@ class Promotion(models.Model):
         choices= TYPE_CHOICES
     )
     is_active = models.BooleanField(
-        default=True,
+        default=False,
     )
     created = models.DateTimeField(
         auto_now=True,

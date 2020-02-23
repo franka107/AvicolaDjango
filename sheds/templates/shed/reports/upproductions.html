@@ -85,8 +85,8 @@
                                         if (boolean == false){
                                             for(var i=0;i<=date.length-1;i++){
                                                 if(shed_date != date[i]){
-                                                    document.write("<td>---</td>"  );    
-                                                    document.write("<td style='border-right: 4px solid black;'>---</td>");
+                                                    document.write("<td>0</td>"  );    
+                                                    document.write("<td style='border-right: 4px solid black;'>0</td>");
                                                 }else{
                                                     document.write("<td>{{  shedregister.package_total }}</td>"  );    
                                                     document.write("<td style='border-right: 4px solid black;'>{{ shedregister.leftover_eggs }}</td>");
@@ -96,8 +96,8 @@
                                             }
                                         }
                                         if(for1 == sl && shed_date!=date[date.length-1]){
-                                            document.write("<td>---</td>"  );    
-                                            document.write("<td style='border-right: 4px solid black;'>---</td>");
+                                            document.write("<td>0</td>"  );    
+                                            document.write("<td style='border-right: 4px solid black;'>0</td>");
                                         }
 
                                     }

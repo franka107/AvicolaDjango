@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}  
 {% if 'sheds.add_shedregister' in user.get_all_permissions %}
-
 <form method="post" enctype="multipart/form-data">
   
   {% csrf_token %}
@@ -46,9 +45,36 @@
     <label for="is_active" class="txt_negrita">Peso de Gallina</label>
     {{ form.chicken_weight }} 
   </div>
+  <div class="row">
+    <p class="accordion btn btn-danger">Section 1</p>
+    <div class="panel">
+      <div class="form-group">
+        <label for="is_active" class="txt_negrita">Cantidad Gallinas</label>
+        {{ form.quantity_chicken }} 
+      </div>
+      <div class="form-group">
+        <label for="is_active" class="txt_negrita">Ingreso Gallinas</label>
+        {{ form.entry_chicken }} 
+      </div>
+      <div class="form-group">
+        <label for="is_active" class="txt_negrita">Ingreso Gallinas</label>
+        {{ form.leave_chicken }} 
+      </div>
+    </div>
+  </div>
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function(){
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+      }
+    }
+  </script>
   <button type="submit" class="btn btn-primary"><span class="fa fa-check mr-2"></span>Aceptar</button>
   <a href="./"  class="btn btn-danger"><span class="fa fa-times mr-2"></span>Cancelar</a>
- 
 </form>
 {% endif %}
 {% endblock %}   
