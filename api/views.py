@@ -28,7 +28,7 @@ class ShedViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
     queryset = Shed.objects.all().order_by('name')
-    serializer_class = UserSerializer
+    serializer_class = ShedSerializer
     http_method_names = ['get']
 
 class ShedProductionUpViewSet(viewsets.ModelViewSet):
