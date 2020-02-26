@@ -4,6 +4,18 @@ from sheds.models import ShedRegister
 from farms.models import Farm
 from django.utils import timezone
 from datetime import datetime, date, time, timedelta
+from django.contrib.auth.models import User, Group
+
+class GroupSerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Group
+        fields = ('name',)
+
+class UserSerializer(serializers.ModelSerializer):    
+    groups = GroupSerializer(many=True)
+    class Meta:
+        model = User
+        fields = ('url', 'username', 'email', 'is_staff', 'groups',)    
 
 class FarmSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,7 +39,7 @@ class ShedProductionUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','egg_white','egg_break','egg_dirty','observation')
 
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
@@ -44,7 +56,7 @@ class ShedProductionDownSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','egg_white','egg_break','egg_dirty','observation')
 
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)

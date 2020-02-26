@@ -67,7 +67,6 @@
                             {% for dates in date_items %}
                                 date.push ("{{ dates.grouper}}"); 
                             {% endfor %}
-                            cont = 0;
                             boolean = false;
                             {% for shedregister in item_list|dictsort:"date" %}
                                 for(var i=0;i<1;i++){

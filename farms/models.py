@@ -3,15 +3,23 @@ from django.db import models
 # Create your models here.
 
 class Farm(models.Model):
+    
+    # nombre de granja
     name = models.CharField(
         max_length=50,
         unique=True)
+    
+    # estado
     is_active = models.BooleanField(
         default=True,
     )
+
+    # fecha de creacion
     created = models.DateTimeField(
         auto_now_add=True,
     )
+
+    # fecha de actualizacion
     updated = models.DateTimeField(
         auto_now=True,
     )

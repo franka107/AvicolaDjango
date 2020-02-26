@@ -9,15 +9,26 @@ from datetime import datetime, date, time, timedelta
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
+from django.contrib.auth.models import User, Group
+
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # Datos API
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    def get_object(self):
+        return self.request.user
 
 class ShedViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
     queryset = Shed.objects.all().order_by('name')
-    serializer_class = ShedSerializer
+    serializer_class = UserSerializer
     http_method_names = ['get']
 
 class ShedProductionUpViewSet(viewsets.ModelViewSet):

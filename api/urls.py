@@ -15,6 +15,7 @@ router.register(r'raisedup', views.ShedRaisedUpViewSet)
 router.register(r'raiseddown', views.ShedRaisedDownViewSet)
 router.register(r'reportpu', views.ProductionUpViewSet)
 router.register(r'reportpd', views.ProductionDownViewSet)
+router.register(r'users', views.UserViewSet)
 
 
 urlpatterns = [

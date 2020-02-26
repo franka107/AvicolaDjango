@@ -7,7 +7,7 @@
     <span class="fa fa-home mr-2"></span>Galpones de Postura
   </h1>
   <h4>
-    <span class="fa fa-arrow-up mr-2"></span>Granja de Arriba
+    <span class="fa fa-arrow-down mr-2"></span>Granja de Abajo
   </h4>
   <div class="row">
     <div class="col-7">
@@ -105,7 +105,9 @@
       <tfoot>
         <tr>
             <th>Total</th>
-            <th colspan="7"></th>
+            <th colspan="4"></th>
+            <th></th>
+            <th colspan="2"></th>
             <th></th>
             <th></th>
             <th></th>
@@ -121,16 +123,20 @@
       var total_col0 = 0;
       var total_col1 = 0;
       var total_col2 = 0;
+      var total_col3 = 0;
+
       $('#ProdutionDown tbody').find('tr').each(function (i, el) {
                 
             total_col0 += parseFloat($(this).find('td').eq(8).text());     
             total_col1 += parseFloat($(this).find('td').eq(10).text());
             total_col2 += parseFloat($(this).find('td').eq(11).text());
-                    
+            total_col3 += parseFloat($(this).find('td').eq(5).text());
+
         });
-        $('#ProdutionDown tfoot tr th').eq(2).text(total_col0);
-        $('#ProdutionDown tfoot tr th').eq(4).text(total_col1+Math.trunc(total_col2/180));
-        $('#ProdutionDown tfoot tr th').eq(5).text(total_col2%180);
+        $('#ProdutionDown tfoot tr th').eq(2).text(total_col3);
+        $('#ProdutionDown tfoot tr th').eq(4).text(total_col0);
+        $('#ProdutionDown tfoot tr th').eq(6).text(total_col1+Math.trunc(total_col2/180));
+        $('#ProdutionDown tfoot tr th').eq(7).text(total_col2%180);
   
     });
   </script>
@@ -145,7 +151,7 @@
   </script>
   <!---------------------------------------------- Tabla Impresa -------------------------------------------------->
   <div class="table-responsive">
-    <table class="table table-hover table-bordered text-center" id="ProdutionDownPrint" style="display: none;">
+    <table class="table table-hover table-bordered text-center" id="ProdutionDownPrint" style="display: none;" >
       <thead>
         <tr>
           <th>Galpon</th>
@@ -188,13 +194,15 @@
       </tbody>
       <tfoot>
         <tr>
-            <th>Total</th>
-            <th colspan="7"></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th colspan="3"></th>
+          <th>Total</th>
+          <th colspan="4"></th>
+          <th></th>
+          <th colspan="2"></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th colspan="3"></th>
         </tr>
     </tfoot>
     </table>
@@ -207,16 +215,20 @@
       var total_col0 = 0;
       var total_col1 = 0;
       var total_col2 = 0;
+      var total_col3 = 0;
+
       $('#ProdutionDownPrint tbody').find('tr').each(function (i, el) {
                 
             total_col0 += parseFloat($(this).find('td').eq(8).text());     
             total_col1 += parseFloat($(this).find('td').eq(10).text());
             total_col2 += parseFloat($(this).find('td').eq(11).text());
-                    
+            total_col3 += parseFloat($(this).find('td').eq(5).text());
+
         });
-        $('#ProdutionDownPrint tfoot tr th').eq(2).text(total_col0);
-        $('#ProdutionDownPrint tfoot tr th').eq(4).text(total_col1+Math.trunc(total_col2/180));
-        $('#ProdutionDownPrint tfoot tr th').eq(5).text(total_col2%180);
+        $('#ProdutionDownPrint tfoot tr th').eq(2).text(total_col3);
+        $('#ProdutionDownPrint tfoot tr th').eq(4).text(total_col0);
+        $('#ProdutionDownPrint tfoot tr th').eq(6).text(total_col1+Math.trunc(total_col2/180));
+        $('#ProdutionDownPrint tfoot tr th').eq(7).text(total_col2%180);
   
     });
   </script>
