@@ -39,7 +39,7 @@ class ShedProductionUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','egg_white','egg_break','egg_dirty','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','egg_white','egg_break','egg_dirty','quantity_chicken','entry_chicken','leave_chicken','observation')
 
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
@@ -56,7 +56,7 @@ class ShedProductionDownSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','egg_white','egg_break','egg_dirty','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','package_total','leftover_eggs','egg_white','egg_break','egg_dirty','quantity_chicken','entry_chicken','leave_chicken','observation')
 
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
@@ -73,7 +73,7 @@ class ShedRaisedUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','quantity_chicken','entry_chicken','leave_chicken','observation')
 
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
@@ -90,7 +90,7 @@ class ShedRaisedDownSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShedRegister
-        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','observation')
+        fields = ('id','shed','shed_id','date','food_income','food_deposit','food_consumption','final_deposit','chicken_death','quantity_chicken','entry_chicken','leave_chicken','observation')
 
     def create(self, validated_data):
         shed_register = ShedRegister.objects.create(**validated_data)
