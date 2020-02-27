@@ -26,7 +26,7 @@ class ShedSerializer(serializers.ModelSerializer):
     farm = FarmSerializer(read_only=True)
     class Meta:
         model = Shed
-        fields = ('id','farm','name')
+        fields = ('id','farm','name','type')
 
 class ShedProductionUpSerializer(serializers.ModelSerializer):
     shed = ShedSerializer(many = False, read_only= True)
