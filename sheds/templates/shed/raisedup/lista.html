@@ -94,7 +94,9 @@
   <tfoot>
     <tr>
       <th>Total</th>
-      <th colspan="5"></th>
+      <th colspan="3"></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th colspan="4"></th>
     </tr>
@@ -105,14 +107,18 @@
   {
     //Defino los totales de mis 2 columnas en 0
     var total_col0 = 0;
+    var total_col1 = 0;
     //Recorro todos los tr ubicados en el tbody
     $('#RaisedDown tbody').find('tr').each(function (i, el) {
               
           //Voy incrementando las variables segun la fila ( .eq(0) representa la fila 1 )
-          total_col0 += parseFloat($(this).find('td').eq(6).text());        
+          total_col0 += parseFloat($(this).find('td').eq(6).text()); 
+          total_col1 += parseFloat($(this).find('td').eq(4).text());        
+       
       });
       //Muestro el resultado en el th correspondiente a la columna
-      $('#RaisedDown tfoot tr th').eq(2).text(total_col0);
+      $('#RaisedDown tfoot tr th').eq(4).text(total_col0);
+      $('#RaisedDown tfoot tr th').eq(2).text(total_col1);
   });
 </script>
 <script type="text/javascript">
@@ -160,7 +166,9 @@
   <tfoot>
     <tr>
       <th>Total</th>
-      <th colspan="5"></th>
+      <th colspan="3"></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th colspan="3"></th>
     </tr>
@@ -171,11 +179,15 @@
   $(document).ready(function()
   {
     var total_col0 = 0;
+    var total_col1 = 0;
     $('#RaisedDownPrint tbody').find('tr').each(function (i, el) {
               
-          total_col0 += parseFloat($(this).find('td').eq(6).text());        
+          total_col0 += parseFloat($(this).find('td').eq(6).text()); 
+          total_col1 += parseFloat($(this).find('td').eq(4).text());        
+       
       });
-      $('#RaisedDownPrint tfoot tr th').eq(2).text(total_col0);
+      $('#RaisedDownPrint tfoot tr th').eq(4).text(total_col0);
+      $('#RaisedDownPrint tfoot tr th').eq(2).text(total_col1);
   });
 </script>
 <!---------------------------------------------- Script para reporte -------------------------------------------------->

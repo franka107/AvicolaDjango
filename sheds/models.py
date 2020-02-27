@@ -22,9 +22,7 @@ class Shed(models.Model):
     )
 
     # nombre de galpon
-    name = models.CharField(
-        max_length=50,
-        unique=True)
+    name = models.IntegerField()
     
     # estado de galpon
     is_active = models.BooleanField(
@@ -49,7 +47,7 @@ class Shed(models.Model):
 
     # funcion str
     def __str__(self):
-        return str(self.name)
+        return str(self.type)+str(self.name)
 
     # funcion get absolute url
     def get_absolute_url(self):
@@ -189,9 +187,17 @@ class ShedRegister(models.Model):
 def update_data(sender, instance, created,**kwargs):
     if created:
         post_save.disconnect(update_data, sender=ShedRegister)
+
         if instance.shed.type == "L" :
             if instance.shed.promotion.quantity == 0 and instance.quantity_chicken != 0:
                 instance.shed.promotion.quantity = instance.quantity_chicken
+                instance.shed.promotion.save()
+
+            instance.shed.promotion.age_days = instance.shed.promotion.age_days + 1
+            instance.shed.promotion.save()
+            
+            if instance.shed.promotion.age_days % 7 == 0:
+                instance.shed.promotion.week_age += 1
                 instance.shed.promotion.save()
 
             instance.chicken_initial = instance.shed.promotion.quantity
@@ -219,6 +225,13 @@ def update_data(sender, instance, created,**kwargs):
 
             if instance.quantity_chicken != 0 :
                 instance.shed.promotion.quantity = instance.quantity_chicken
+                instance.shed.promotion.save()
+            
+            instance.shed.promotion.age_days = instance.shed.promotion.age_days + 1
+            instance.shed.promotion.save()
+
+            if instance.shed.promotion.age_days % 7 == 0:
+                instance.shed.promotion.week_age += 1
                 instance.shed.promotion.save()
 
             instance.chicken_initial = instance.shed.promotion.quantity

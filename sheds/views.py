@@ -27,7 +27,7 @@ class ProductionForm(forms.ModelForm):
         farm = kwargs.pop('farm', None)
         type = kwargs.pop('type', None)        
         super().__init__(*args, **kwargs)
-        self.fields['shed'].queryset = self.fields['shed'].queryset.filter(type=type).filter(farm__name=farm)
+        self.fields['shed'].queryset = self.fields['shed'].queryset.filter(type=type).filter(farm__name=farm).order_by('type','name')
 
 
 class RaisedForm(forms.ModelForm):
@@ -38,14 +38,15 @@ class RaisedForm(forms.ModelForm):
         farm = kwargs.pop('farm', None)
         type = kwargs.pop('type', None)        
         super().__init__(*args, **kwargs)
-        self.fields['shed'].queryset = self.fields['shed'].queryset.filter(
-            type=type).filter(farm__name=farm)
+        self.fields['shed'].queryset = self.fields['shed'].queryset.filter(type=type).filter(farm__name=farm).order_by('type','name')
 
 #-----------------------------------------------------------------------------------------------------------------------#
 # CRUD Galpones
 
 class ShedListado(LoginRequiredMixin,ListView): 
     model = Shed
+    def get_queryset(self):
+        return Shed.objects.order_by('type','name')
  
 class ShedDetalle(LoginRequiredMixin,DetailView): 
     model = Shed
@@ -336,7 +337,7 @@ def ReportsDownProductions(request):
         'sheds_items' : sheds_and_items,
         'data_date' : data_date,
     }    
-    return render(request,"shed/reports/upproductions.html",context)
+    return render(request,"shed/reports/downproductions.html",context)
 
 def ReportsUpProductions(request):
     min_date = request.GET.get('min_date')
@@ -364,14 +365,14 @@ def ReportsUpProductions(request):
         'sheds_items' : sheds_and_items,
         'data_date' : data_date,
     }    
-    return render(request,"shed/reports/downproductions.html",context)    
+    return render(request,"shed/reports/upproductions.html",context)    
     
 
 def ReportsShedProduction(request):
     shed = request.GET.get('shed')
     month = request.GET.get('date')
     mes = timezone.now() - timedelta(days=27)
-    qs = ShedRegister.objects.filter(shed__type="P").order_by('name')
+    qs = ShedRegister.objects.filter(shed__type="P").order_by('date')
     qss = Shed.objects.filter(type="P").order_by('name')
     #if date == None:
     #    qs = ShedRegister.objects.filter(shed__type="P").filter(date__gte=mes).order_by('date')

@@ -8,6 +8,15 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+class ShedForm(forms.ModelForm):
+    class Meta:
+        model = Promotion
+        fields = "__all__" 
+    def __init__(self, *args, **kwargs):       
+        super().__init__(*args, **kwargs)
+        self.fields['shed'].queryset = self.fields['shed'].queryset.order_by('type','name')
+
+
 class PromotionListado(LoginRequiredMixin,ListView): 
     model = Promotion
  
@@ -17,9 +26,13 @@ class PromotionDetalle(LoginRequiredMixin,DetailView):
 class PromotionCrear(LoginRequiredMixin,SuccessMessageMixin, CreateView): 
     model = Promotion
     form = Promotion
-    fields = "__all__" 
+    form_class = ShedForm
     success_message = 'Promocion Creada Correctamente !' 
- 
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        return kwargs
+
     def get_success_url(self):        
         return reverse('leer_promotion') 
  
